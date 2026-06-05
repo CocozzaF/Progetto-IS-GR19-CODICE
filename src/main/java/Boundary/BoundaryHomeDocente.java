@@ -2,6 +2,7 @@ package Boundary;
 
 import javax.swing.*;
 import jakarta.inject.Singleton;
+import jakarta.persistence.OneToMany;
 
 public class BoundaryHomeDocente {
     private JButton RegistraLezione;
