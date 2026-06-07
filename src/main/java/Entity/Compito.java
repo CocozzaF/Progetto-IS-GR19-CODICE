@@ -8,6 +8,7 @@ public class Compito {
     private Date dataAssegnazione;
     private Date dataScadenza;
 
+    // Costruttore
     public Compito(String titolo, String descrizione, Date dataAssegnazione, Date dataScadenza) {
         this.titolo = titolo;
         this.descrizione = descrizione;
@@ -15,5 +16,16 @@ public class Compito {
         this.dataScadenza = dataScadenza;
     }
 
-    // Aggiungi qui i Getter e i Setter generati da IntelliJ (Alt+Insert)
+    // --- GETTER E SETTER ---
+    public String getTitolo() { return titolo; }
+    public void setTitolo(String titolo) { this.titolo = titolo; }
+
+    public String getDescrizione() { return descrizione; }
+    public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
+
+    public Date getDataAssegnazione() { return dataAssegnazione; }
+    public void setDataAssegnazione(Date dataAssegnazione) { this.dataAssegnazione = dataAssegnazione; }
+
+    public Date getDataScadenza() { return dataScadenza; }
+    public void setDataScadenza(Date dataScadenza) { this.dataScadenza = dataScadenza; }
 }
