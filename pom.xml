@@ -16,21 +16,19 @@
     </properties>
 
     <dependencies>
-        <!-- HIBERNATE CORE (Per l'ORM e la persistenza dei dati) -->
+
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>6.4.4.Final</version>
         </dependency>
 
-        <!-- DRIVER DATABASE (Esempio per PostgreSQL, puoi cambiarlo se usi MySQL o H2) -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.2</version>
         </dependency>
 
-        <!-- JUNIT 5 (Per i test automatizzati) -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

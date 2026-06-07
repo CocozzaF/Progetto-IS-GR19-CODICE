@@ -8,7 +8,6 @@ public class Compito {
     private Date dataAssegnazione;
     private Date dataScadenza;
 
-    // Costruttore
     public Compito(String titolo, String descrizione, Date dataAssegnazione, Date dataScadenza) {
         this.titolo = titolo;
         this.descrizione = descrizione;
@@ -16,7 +15,6 @@ public class Compito {
         this.dataScadenza = dataScadenza;
     }
 
-    // --- GETTER E SETTER ---
     public String getTitolo() { return titolo; }
     public void setTitolo(String titolo) { this.titolo = titolo; }
 
