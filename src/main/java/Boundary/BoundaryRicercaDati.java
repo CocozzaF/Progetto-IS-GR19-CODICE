@@ -5,10 +5,12 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import Control.GestoreRegistroElettronico;
+import Entity.ClasseVirtuale;
+import Entity.Studente;
 
 public class BoundaryRicercaDati extends JFrame {
-
-    private static final long serialVersionUID = 1L;
 
     private JPanel contentPane;
     private JComboBox<String> comboTipoRicerca;
@@ -66,11 +68,39 @@ public class BoundaryRicercaDati extends JFrame {
     private void cercaStudenti(String criterio) {
         modelloTabella.setColumnIdentifiers(new String[]{"Nome", "Cognome", "Email / Matricola"});
         modelloTabella.setRowCount(0);
+        
+        try {
+            GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
+            List<?> risultati = gestore.ricercaDati("Studente", criterio);
+
+            for (Object obj : risultati) {
+                if (obj instanceof Studente) {
+                    Studente studente = (Studente) obj;
+                    modelloTabella.addRow(new Object[]{studente.getNome(), studente.getCognome(), studente.getEmail() + " / " + studente.getMatricola()});
+                }
+            }
+        } catch (Exception ex) {
+            lblMessaggio.setText("Errore durante la ricerca: " + ex.getMessage());
+        }
     }
 
     private void cercaClassi(String criterio) {
         modelloTabella.setColumnIdentifiers(new String[]{"Codice Classe", "Nome Classe", "Docente"});
         modelloTabella.setRowCount(0);
+        
+        try {
+            GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
+            List<?> risultati = gestore.ricercaDati("Classe", criterio);
+
+            for (Object obj : risultati) {
+                if (obj instanceof ClasseVirtuale) {
+                    ClasseVirtuale classe = (ClasseVirtuale) obj;
+                    modelloTabella.addRow(new Object[]{classe.getCodiceUnivoco(), classe.getNome(), "N/A"});
+                }
+            }
+        } catch (Exception ex) {
+            lblMessaggio.setText("Errore durante la ricerca: " + ex.getMessage());
+        }
     }
 
     public static void main(String[] args) {

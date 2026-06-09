@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -41,7 +40,7 @@ public class BoundaryAssegnaCompito {
             sdf.setLenient(false);
             try {
                 dataScadenza = sdf.parse(dataString);
-            } catch (ParseException ex) {
+            } catch (Exception ex) {
                 lblEsito.setText("Formato data errato!");
                 lblEsito.setForeground(Color.RED);
                 return;

@@ -1,12 +1,30 @@
 package Entity;
 
+import jakarta.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "compito")
 public class Compito {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "titolo")
     private String titolo;
+
+    @Column(name = "descrizione")
     private String descrizione;
+
+    @Column(name = "data_assegnazione")
+    @Temporal(TemporalType.DATE)
     private Date dataAssegnazione;
+
+    @Column(name = "data_scadenza")
+    @Temporal(TemporalType.DATE)
     private Date dataScadenza;
+
+    public Compito() {}
 
     public Compito(String titolo, String descrizione, Date dataAssegnazione, Date dataScadenza) {
         this.titolo = titolo;

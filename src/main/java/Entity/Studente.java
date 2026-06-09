@@ -1,11 +1,25 @@
 package Entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "studente")
 public class Studente {
 
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "cognome")
     private String cognome;
+
+    @Column(name = "email")
     private String email;
+
+    @Id
+    @Column(name = "matricola")
     private String matricola;
+
+    public Studente() {}
 
     public Studente(String nome, String cognome, String email, String matricola) {
         this.nome = nome;

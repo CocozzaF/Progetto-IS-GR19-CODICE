@@ -1,13 +1,25 @@
 package Entity;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "classe_virtuale")
 public class ClasseVirtuale {
+    @Column(name = "nome")
     private String nome;
+
+    @Id
+    @Column(name = "codice_univoco")
     private String codiceUnivoco;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "classe_codice")
     private List<Compito> compitiAssegnati;
+
+    public ClasseVirtuale() {}
 
     public ClasseVirtuale(String nome, String codiceUnivoco) {
         this.nome = nome;
