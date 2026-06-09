@@ -1,4 +1,4 @@
-package Data;
+package Database;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

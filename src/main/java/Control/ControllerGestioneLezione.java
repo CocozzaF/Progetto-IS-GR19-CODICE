@@ -16,23 +16,24 @@ public class ControllerGestioneLezione {
         this.registroClassi = new RegistroClassi();
     }
 
+    public ControllerGestioneLezione(RegistroClassi registroClassi) {
+        this.registroClassi = registroClassi;
+    }
+
     public boolean registraLezione(String idClasse, String data, String argomento, String descrizione) {
         // Delega la logica alla Facade come da pattern Indirection / Controller
         return registroClassi.registraLezione(idClasse, data, argomento, descrizione);
     }
 
     public List<Lezione> getLezClasse(String idClasse, String data) {
-        // Metodo presente nel class diagram
-        return null;
+        return registroClassi.getLezClasse(idClasse, data);
     }
 
     public boolean eliminaLezione(String idClasse, Lezione lezione) {
-        // Metodo presente nel class diagram
-        return false;
+        return registroClassi.eliminaLezione(idClasse, lezione);
     }
 
     public boolean modificaLezione(String idClasse, String data, String nuovoTitolo, Lezione nuovaLez) {
-        // Metodo presente nel class diagram
-        return false;
+        return registroClassi.modificaLezione(idClasse, data, nuovoTitolo, nuovaLez);
     }
 }

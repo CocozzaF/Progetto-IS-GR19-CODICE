@@ -1,4 +1,4 @@
-package Data;
+package Database;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -38,6 +38,23 @@ public class GestorePersistenza {
         try {
             tx.begin();
             em.merge(oggetto);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean rimuoviOggetto(Object oggetto) {
+        EntityManager em = JpaUtil.getInstance().getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            Object managed = em.merge(oggetto);
+            em.remove(managed);
             tx.commit();
             return true;
         } catch (Exception e) {

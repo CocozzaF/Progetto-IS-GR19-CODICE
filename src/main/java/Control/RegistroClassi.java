@@ -1,7 +1,7 @@
 package Control;
 
 import Boundary.BoundaryGestoreNotifica;
-import Data.GestorePersistenza;
+import Database.GestorePersistenza;
 import Entity.ClasseVirtuale;
 import Entity.Lezione;
 
@@ -27,6 +27,10 @@ public class RegistroClassi {
         this.gestorePersistenza = new GestorePersistenza();
     }
 
+    public RegistroClassi(GestorePersistenza gestorePersistenza) {
+        this.gestorePersistenza = gestorePersistenza;
+    }
+
     public boolean registraLezione(String idClasse, String dataStr, String argomento, String descrizione) {
         // msg 8: Cerca ClasseVirtuale per idClasse
         String jpql = "SELECT c FROM ClasseVirtuale c WHERE c.cod = :cod";
@@ -40,10 +44,10 @@ public class RegistroClassi {
 
         ClasseVirtuale classeVirtuale = trovate.get(0);
 
-        // Parsing data (assumiamo formato yyyy-MM-dd come standard, oppure gestiamo l'eccezione)
+        // Parsing data (assumiamo formato dd-MM-yyyy come standard, oppure gestiamo l'eccezione)
         Date dataObj;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             dataObj = sdf.parse(dataStr);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -65,7 +69,7 @@ public class RegistroClassi {
         if (!aggiornataClasse) return false;
 
         // msg 19: Invia dati notifica
-        BoundaryGestoreNotifica.InvioDatiNotifiche("Nuova lezione registrata per la classe " + idClasse);
+        BoundaryGestoreNotifica.notificaNuovaLezione(idClasse);
 
         // msg 21: Ritorna true
         return true;
@@ -74,5 +78,72 @@ public class RegistroClassi {
     public boolean aggiungiLezioneAClasseDescrizione(Lezione lezione, String idClasse) {
         // Metodo presente nel class diagram
         return false;
+    }
+
+    public List<Lezione> getLezClasse(String idClasse, String dataStr) {
+        String jpql;
+        List<Lezione> lezioni;
+        if (dataStr != null && !dataStr.isEmpty()) {
+            Date dataObj;
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                dataObj = sdf.parse(dataStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+            jpql = "SELECT l FROM Lezione l WHERE l.classeVirtuale.cod = :cod AND l.data = :data";
+            // Per eseguire query con più parametri o bypassiamo con un approccio custom o per ora usiamo il nome parametro.
+            // Dato che eseguiQueryNamedParam accetta un solo parametro, useremo l'EntityManager direttamente o faremo un workaround
+            // Per semplicità e mantenendo la struttura:
+            jpql = "SELECT l FROM Lezione l WHERE l.classeVirtuale.cod = '" + idClasse + "' AND l.data = '" + new java.sql.Date(dataObj.getTime()) + "'";
+            lezioni = gestorePersistenza.eseguiQuery(jpql, Lezione.class);
+        } else {
+            jpql = "SELECT l FROM Lezione l WHERE l.classeVirtuale.cod = :cod";
+            lezioni = gestorePersistenza.eseguiQueryNamedParam(jpql, "cod", idClasse, Lezione.class);
+        }
+        return lezioni;
+    }
+
+    public boolean eliminaLezione(String idClasse, Lezione lezione) {
+        // Cerca ClasseVirtuale per idClasse
+        String jpql = "SELECT c FROM ClasseVirtuale c WHERE c.cod = :cod";
+        List<ClasseVirtuale> trovate = gestorePersistenza.eseguiQueryNamedParam(jpql, "cod", idClasse, ClasseVirtuale.class);
+        if (trovate == null || trovate.isEmpty()) {
+            return false;
+        }
+
+        ClasseVirtuale classeVirtuale = trovate.get(0);
+        
+        // Assicuriamoci che la lezione sia della classe corretta
+        if (lezione.getClasseVirtuale() != null && !lezione.getClasseVirtuale().getCod().equals(idClasse)) {
+            return false;
+        }
+
+        classeVirtuale.rimuoviLezione(lezione);
+        
+        // Rimuoviamo la lezione dal DB
+        boolean rimossa = gestorePersistenza.rimuoviOggetto(lezione);
+        if (!rimossa) return false;
+        
+        // Aggiorniamo la classe virtuale
+        return gestorePersistenza.aggiornaOggetto(classeVirtuale);
+    }
+
+    public boolean modificaLezione(String idClasse, String dataStr, String nuovoTitolo, Lezione nuovaLez) {
+        Date dataObj;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            dataObj = sdf.parse(dataStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        nuovaLez.setData(dataObj);
+        nuovaLez.setArgomento(nuovoTitolo);
+        // la descrizione rimane invariata o si potrebbe passare, ma atteniamoci alla firma.
+
+        return gestorePersistenza.aggiornaOggetto(nuovaLez);
     }
 }

@@ -7,11 +7,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import jakarta.inject.Singleton;
+
 /**
  * Layer: Boundary (GUI)
  * GRASP: Low Coupling (Interagisce solo con il Controller, non conosce Entity né Persistenza)
  * GRASP: High Cohesion (Gestisce esclusivamente l'interfaccia utente, validazione UI e raccolta input)
  */
+@Singleton
 public class BoundaryRegistraLezione extends JFrame {
 
     private JComboBox<String> classeCombo;
@@ -20,17 +23,24 @@ public class BoundaryRegistraLezione extends JFrame {
     private JTextField descrizioneField;
     private JButton registraLezBtn;
     private JLabel errMessageLabel;
+    private JPanel mainPanel;
 
     private ControllerGestioneLezione controller;
 
     public BoundaryRegistraLezione() {
         this.controller = new ControllerGestioneLezione();
+        inizializzaInterfaccia();
     }
 
-    public void mostraSchermata() {
+    public BoundaryRegistraLezione(ControllerGestioneLezione controller) {
+        this.controller = controller;
+        inizializzaInterfaccia();
+    }
+
+    private void inizializzaInterfaccia() {
         setTitle("Registra Lezione");
         setSize(400, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLayout(new GridLayout(6, 2, 5, 5));
 
         // Inizializzazione componenti
@@ -39,7 +49,7 @@ public class BoundaryRegistraLezione extends JFrame {
         classeCombo = new JComboBox<>(new String[]{"Seleziona classe...", "1A", "2B", "3C"});
         add(classeCombo);
 
-        add(new JLabel("Data (yyyy-MM-dd):"));
+        add(new JLabel("Data (dd-MM-yyyy):"));
         dataField = new JTextField();
         add(dataField);
 
@@ -67,6 +77,9 @@ public class BoundaryRegistraLezione extends JFrame {
         });
 
         setLocationRelativeTo(null);
+    }
+
+    public void mostraSchermata() {
         setVisible(true);
     }
 
@@ -92,7 +105,7 @@ public class BoundaryRegistraLezione extends JFrame {
         boolean successo = controller.registraLezione(idClasse, data, argomento, descrizione);
 
         if (successo) {
-            errMessageLabel.setForeground(new Color(0, 153, 0)); // Verde
+            errMessageLabel.setForeground(Color.GREEN); // Verde
             errMessageLabel.setText("Lezione registrata con successo");
         } else {
             errMessageLabel.setForeground(Color.RED);
