@@ -1,6 +1,6 @@
 package Boundary;
 
-import Control.ControllerGestioneCompiti;
+import Control.RegistroClassi;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,55 +30,37 @@ public class BoundaryAssegnaCompito {
     }
 
     private void eseguiAssegnazione() {
-        String idClasse = txtClasse.getText();
-        String titolo = txtTitolo.getText();
-        String descrizione = txtDescrizione.getText();
-        String dataString = txtDataScadenza.getText();
+        String codiceClasse = txtClasse.getText().trim();
+        String titolo = txtTitolo.getText().trim();
+        String descrizione = txtDescrizione.getText().trim();
+        String dataString = txtDataScadenza.getText().trim();
 
-        if (idClasse.isEmpty() || titolo.isEmpty() || dataString.isEmpty()) {
-            lblEsito.setText("Errore: Compila tutti i campi obbligatori.");
-            lblEsito.setForeground(Color.RED);
-            return;
-        }
-
-        Date dataScadenza;
-        try {
+        Date dataScadenza = null;
+        if (!dataString.isEmpty()) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             sdf.setLenient(false);
-            dataScadenza = sdf.parse(dataString);
-        } catch (ParseException ex) {
-            lblEsito.setText("Errore: Formato data non valido (usa GG/MM/AAAA).");
-            lblEsito.setForeground(Color.RED);
-            return;
+            try {
+                dataScadenza = sdf.parse(dataString);
+            } catch (ParseException ex) {
+                lblEsito.setText("Formato data errato!");
+                lblEsito.setForeground(Color.RED);
+                return;
+            }
         }
 
-        ControllerGestioneCompiti controller = new ControllerGestioneCompiti();
-        boolean esito = controller.assegnaNuovoCompito(idClasse, titolo, descrizione, dataScadenza);
+        RegistroClassi controller = new RegistroClassi();
+        boolean esito = controller.assegnaCompito(codiceClasse, titolo, descrizione, dataScadenza);
 
         if (esito) {
-            lblEsito.setText("Compito assegnato correttamente!");
+            lblEsito.setText("Compito assegnato!");
             lblEsito.setForeground(Color.GREEN);
 
             txtTitolo.setText("");
             txtDescrizione.setText("");
             txtDataScadenza.setText("");
         } else {
-            lblEsito.setText("Errore di sistema: impossibile salvare il compito.");
+            lblEsito.setText("Errore: dati mancanti o non validi.");
             lblEsito.setForeground(Color.RED);
         }
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setTitle("Sistema Registro - Assegna Compito");
-
-        frame.setContentPane(new BoundaryAssegnaCompito().contentPane);
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-
-        frame.setVisible(true);
     }
 }
