@@ -20,7 +20,7 @@ public class ClasseVirtualeTest {
     public void testCreaCompito() {
         ClasseVirtuale classe = new ClasseVirtuale("Matematica", "MAT01");
         Date dataOggi = new Date();
-        Date dataScadenza = new Date(dataOggi.getTime() + 86400000L); // +1 giorno
+        Date dataScadenza = new Date(dataOggi.getTime() + 86400000L);
         
         Compito compito = classe.creaCompito("Esercizio 1", "Risolvi", dataOggi, dataScadenza);
         

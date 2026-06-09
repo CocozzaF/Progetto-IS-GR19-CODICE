@@ -22,6 +22,7 @@ public class ClasseVirtuale {
     public void setCodiceUnivoco(String codiceUnivoco) { this.codiceUnivoco = codiceUnivoco; }
 
     public List<Compito> getCompitiAssegnati() { return compitiAssegnati; }
+    public void setCompitiAssegnati(List<Compito> compitiAssegnati) { this.compitiAssegnati = compitiAssegnati; }
 
     public Compito creaCompito(String titolo, String descrizione, Date dataAssegnazione, Date dataScadenza) {
         Compito nuovoCompito = new Compito(titolo, descrizione, dataAssegnazione, dataScadenza);

@@ -9,7 +9,7 @@ public class CompitoTest {
     @Test
     public void testCreazioneCompito() {
         Date dataAssegnazione = new Date();
-        Date dataScadenza = new Date(dataAssegnazione.getTime() + 86400000L); // +1 giorno
+        Date dataScadenza = new Date(dataAssegnazione.getTime() + 86400000L);
         
         Compito compito = new Compito("Titolo", "Descrizione lunga", dataAssegnazione, dataScadenza);
         

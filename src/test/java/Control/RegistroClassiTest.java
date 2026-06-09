@@ -17,18 +17,16 @@ public class RegistroClassiTest {
         registroClassi = new RegistroClassi();
     }
 
-    // [Test ID 1] HAPPY PATH
     @Test
     public void testAssegnaCompito_InputValidi_Successo() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, 5); // Scadenza futura
+        cal.add(Calendar.DAY_OF_MONTH, 5);
         Date dataScadenza = cal.getTime();
 
         boolean result = registroClassi.assegnaCompito("C123", "Esercizio Matematica", "Risolvere le equazioni", dataScadenza);
         assertTrue(result, "Il metodo dovrebbe restituire true con input validi.");
     }
 
-    // [Test ID 2] CLASSE MANCANTE
     @Test
     public void testAssegnaCompito_CodiceClasseMancante_Fallimento() {
         Calendar cal = Calendar.getInstance();
@@ -42,7 +40,6 @@ public class RegistroClassiTest {
         assertFalse(resultNull, "Il metodo dovrebbe restituire false se il codice classe è null.");
     }
 
-    // [Test ID 3] TITOLO VUOTO
     @Test
     public void testAssegnaCompito_TitoloVuoto_Fallimento() {
         Calendar cal = Calendar.getInstance();
@@ -53,18 +50,16 @@ public class RegistroClassiTest {
         assertFalse(result, "Il metodo dovrebbe restituire false se il titolo è vuoto.");
     }
 
-    // [Test ID 4] SCADENZA PASSATA
     @Test
     public void testAssegnaCompito_ScadenzaPassata_Fallimento() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, -5); // Scadenza passata
+        cal.add(Calendar.DAY_OF_MONTH, -5);
         Date dataScadenza = cal.getTime();
 
         boolean result = registroClassi.assegnaCompito("C123", "Esercizio", "Descrizione", dataScadenza);
         assertFalse(result, "Il metodo dovrebbe restituire false se la scadenza è passata.");
     }
 
-    // [Test ID 5] FORMATO/TIPO DATA ERRATO
     @Test
     public void testAssegnaCompito_DataNull_Fallimento() {
         boolean result = registroClassi.assegnaCompito("C123", "Esercizio", "Descrizione", null);

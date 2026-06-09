@@ -1,16 +1,27 @@
 package Control;
 
+import Data.GestorePersistenza;
 import Entity.ClasseVirtuale;
 import Entity.Compito;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class RegistroClassi {
 
+    private GestorePersistenza gestorePersistenza;
+
+    public RegistroClassi() {
+        this.gestorePersistenza = new GestorePersistenza();
+    }
+
+    public List<ClasseVirtuale> cercaClasse(String nome) {
+        return gestorePersistenza.ricercaClassiPerNome(nome);
+    }
+
     public boolean assegnaCompito(String codiceUnivoco, String titolo, String descrizione, Date scadenza) {
         try {
-            // Business Logic Validation (Moved from Boundary)
             if (codiceUnivoco == null || codiceUnivoco.trim().isEmpty()) {
                 return false;
             }
@@ -21,7 +32,6 @@ public class RegistroClassi {
                 return false;
             }
 
-            // Date validation: scadenza cannot be before today
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             Date dataOdierna = sdf.parse(sdf.format(new Date()));
             Date scadenzaNormalizzata = sdf.parse(sdf.format(scadenza));
