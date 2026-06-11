@@ -1,4 +1,4 @@
-package Data;
+package Database;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,10 +9,8 @@ public class JpaUtil {
     private EntityManagerFactory emf;
 
     private JpaUtil() {
-        try {
-            emf = Persistence.createEntityManagerFactory("ProgettoPU");
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory("prova");
         }
     }
 
@@ -25,5 +23,11 @@ public class JpaUtil {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+
+    public void close() {
+        if (emf != null && emf.isOpen()) {
+            emf.close();
+        }
     }
 }

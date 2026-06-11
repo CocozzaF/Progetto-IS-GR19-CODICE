@@ -13,11 +13,12 @@ import Entity.Studente;
 public class BoundaryRicercaDati extends JFrame {
 
     private JPanel contentPane;
-    private JComboBox<String> comboTipoRicerca;
-    private JTextField txtCriterio;
-    private JButton btnCerca;
-    private JTable tableRisultati;
-    private JLabel lblMessaggio;
+    private JComboBox<String> TipoRicerca;
+    private JTextField CriterioTesto;
+    private JComboBox<String> FiltroTipologia;
+    private JButton AvviaRicerca;
+    private JTable Risultati;
+    private JLabel ErrMessage;
 
     private DefaultTableModel modelloTabella;
 
@@ -30,38 +31,42 @@ public class BoundaryRicercaDati extends JFrame {
         setLocationRelativeTo(null);
 
         modelloTabella = new DefaultTableModel();
-        tableRisultati.setModel(modelloTabella);
+        Risultati.setModel(modelloTabella);
 
-        lblMessaggio.setText("");
-        lblMessaggio.setForeground(Color.RED);
+        ErrMessage.setText("");
+        ErrMessage.setForeground(Color.RED);
 
-        btnCerca.addActionListener(new ActionListener() {
+        AvviaRicerca.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eseguiRicerca();
+                Cerca();
             }
         });
     }
 
-    private void eseguiRicerca() {
-        String tipoRicerca = (String) comboTipoRicerca.getSelectedItem();
-        String criterio = txtCriterio.getText().trim();
+    public void mostraSchermata() {
+        setVisible(true);
+    }
+
+    public void Cerca() {
+        String tipoRicerca = (String) TipoRicerca.getSelectedItem();
+        String criterio = CriterioTesto.getText().trim();
 
         if (criterio.isEmpty()) {
-            lblMessaggio.setText("Errore: Inserire un testo per la ricerca!");
+            ErrMessage.setText("Errore: Inserire un testo per la ricerca!");
             modelloTabella.setRowCount(0);
             modelloTabella.setColumnCount(0);
             return;
         }
 
-        lblMessaggio.setText("");
+        ErrMessage.setText("");
 
         if ("Studente".equals(tipoRicerca)) {
             cercaStudenti(criterio);
         } else if ("Classe".equals(tipoRicerca)) {
             cercaClassi(criterio);
         } else {
-            lblMessaggio.setText("Errore: Selezionare un tipo di ricerca valido!");
+            ErrMessage.setText("Errore: Selezionare un tipo di ricerca valido!");
         }
     }
 
@@ -71,16 +76,17 @@ public class BoundaryRicercaDati extends JFrame {
         
         try {
             GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
-            List<?> risultati = gestore.ricercaDati("Studente", criterio);
+            List<Studente> risultati = gestore.getRicercaCtrls().ricercaStudente(criterio);
 
-            for (Object obj : risultati) {
-                if (obj instanceof Studente) {
-                    Studente studente = (Studente) obj;
+            if (risultati != null && !risultati.isEmpty()) {
+                for (Studente studente : risultati) {
                     modelloTabella.addRow(new Object[]{studente.getNome(), studente.getCognome(), studente.getEmail() + " / " + studente.getMatricola()});
                 }
+            } else {
+                ErrMessage.setText("Nessuno studente trovato o errore nei criteri.");
             }
         } catch (Exception ex) {
-            lblMessaggio.setText("Errore durante la ricerca: " + ex.getMessage());
+            ErrMessage.setText("Errore durante la ricerca: " + ex.getMessage());
         }
     }
 
@@ -90,16 +96,15 @@ public class BoundaryRicercaDati extends JFrame {
         
         try {
             GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
-            List<?> risultati = gestore.ricercaDati("Classe", criterio);
+            ClasseVirtuale classe = gestore.getRicercaCtrls().ricercaClassePerCodice(criterio);
 
-            for (Object obj : risultati) {
-                if (obj instanceof ClasseVirtuale) {
-                    ClasseVirtuale classe = (ClasseVirtuale) obj;
-                    modelloTabella.addRow(new Object[]{classe.getCodiceUnivoco(), classe.getNome(), "N/A"});
-                }
+            if (classe != null) {
+                modelloTabella.addRow(new Object[]{classe.getCod(), classe.getNome(), classe.getDocente()});
+            } else {
+                ErrMessage.setText("Nessuna classe trovata o errore nei criteri.");
             }
         } catch (Exception ex) {
-            lblMessaggio.setText("Errore durante la ricerca: " + ex.getMessage());
+            ErrMessage.setText("Errore durante la ricerca: " + ex.getMessage());
         }
     }
 

@@ -1,7 +1,4 @@
 package Boundary;
-
-import Control.RegistroClassi;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,27 +9,34 @@ import java.util.Date;
 public class BoundaryAssegnaCompito {
 
     private JPanel contentPane;
-    private JTextField txtClasse;
-    private JTextField txtTitolo;
-    private JTextField txtDescrizione;
-    private JTextField txtDataScadenza;
-    private JButton btnAssegna;
-    private JLabel lblEsito;
+    private JTextField Titolo;
+    private JTextField Desc;
+    private JTextField Scadenza;
+    private JButton AllegaFile;
+    private JButton Assegna;
+    private JLabel ErrMessage;
 
     public BoundaryAssegnaCompito() {
-        btnAssegna.addActionListener(new ActionListener() {
+        Assegna.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eseguiAssegnazione();
+                Assegna();
             }
         });
     }
 
-    private void eseguiAssegnazione() {
-        String codiceClasse = txtClasse.getText().trim();
-        String titolo = txtTitolo.getText().trim();
-        String descrizione = txtDescrizione.getText().trim();
-        String dataString = txtDataScadenza.getText().trim();
+    public void mostraSchermata() {
+        JFrame frame = new JFrame("Assegna Compito");
+        frame.setContentPane(contentPane);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public void Assegna() {
+        String titolo = Titolo.getText().trim();
+        String descrizione = Desc.getText().trim();
+        String dataString = Scadenza.getText().trim();
 
         Date dataScadenza = null;
         if (!dataString.isEmpty()) {
@@ -41,25 +45,25 @@ public class BoundaryAssegnaCompito {
             try {
                 dataScadenza = sdf.parse(dataString);
             } catch (Exception ex) {
-                lblEsito.setText("Formato data errato!");
-                lblEsito.setForeground(Color.RED);
+                ErrMessage.setText("Formato data errato!");
+                ErrMessage.setForeground(Color.RED);
                 return;
             }
         }
 
-        RegistroClassi controller = new RegistroClassi();
-        boolean esito = controller.assegnaCompito(codiceClasse, titolo, descrizione, dataScadenza);
+        Control.GestoreRegistroElettronico controller = new Control.GestoreRegistroElettronico();
+        boolean esito = controller.assegnaCompito("1A", titolo, descrizione, dataScadenza);
 
         if (esito) {
-            lblEsito.setText("Compito assegnato!");
-            lblEsito.setForeground(Color.GREEN);
+            ErrMessage.setText("Compito assegnato!");
+            ErrMessage.setForeground(Color.GREEN);
 
-            txtTitolo.setText("");
-            txtDescrizione.setText("");
-            txtDataScadenza.setText("");
+            Titolo.setText("");
+            Desc.setText("");
+            Scadenza.setText("");
         } else {
-            lblEsito.setText("Errore: dati mancanti o non validi.");
-            lblEsito.setForeground(Color.RED);
+            ErrMessage.setText("Errore: dati mancanti o non validi.");
+            ErrMessage.setForeground(Color.RED);
         }
     }
 }

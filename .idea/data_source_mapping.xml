@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="DataSourcePerFileMappings">
-    <file url="file://$PROJECT_DIR$/ddl_ClasseVirtuale.sql" value="b5eac7a2-4dd9-4c8c-a3dc-636b3efd889b" />
-    <file url="file://$PROJECT_DIR$/ddl_Compito.sql" value="b5eac7a2-4dd9-4c8c-a3dc-636b3efd889b" />
-    <file url="file://$PROJECT_DIR$/ddl_Studente.sql" value="b5eac7a2-4dd9-4c8c-a3dc-636b3efd889b" />
-  </component>
-</project>
