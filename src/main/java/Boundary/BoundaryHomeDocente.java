@@ -1,6 +1,6 @@
 package Boundary;
 
-import Control.ControllerRegistroElettronico;
+import Control.GestoreRegistroElettronico;
 import javax.swing.*;
 
 public class BoundaryHomeDocente {
@@ -20,7 +20,7 @@ public class BoundaryHomeDocente {
             welcomeLabel.setText("Benvenuto Prof. " + nomeDocente);
         }
 
-        ControllerRegistroElettronico controller = new ControllerRegistroElettronico();
+        GestoreRegistroElettronico controller = new GestoreRegistroElettronico();
 
         boundaryRegistraLezione = new BoundaryRegistraLezione(controller);
 

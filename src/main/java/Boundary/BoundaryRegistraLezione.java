@@ -1,6 +1,6 @@
 package Boundary;
 
-import Control.ControllerRegistroElettronico;
+import Control.GestoreRegistroElettronico;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +20,10 @@ public class BoundaryRegistraLezione extends JFrame {
     private JLabel errMessageLabel;
     private JPanel mainPanel;
 
-    private ControllerRegistroElettronico controller;
+    private GestoreRegistroElettronico controller;
 
 
-    public BoundaryRegistraLezione(ControllerRegistroElettronico controller) {
+    public BoundaryRegistraLezione(GestoreRegistroElettronico controller) {
         this.controller = controller;
         inizializzaInterfaccia();
     }
