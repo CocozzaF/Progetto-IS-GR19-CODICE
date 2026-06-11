@@ -1,6 +1,6 @@
 package Boundary;
 
-import Control.ControllerGestioneLezione;
+import Control.ControllerRegistroElettronico;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +9,6 @@ import java.awt.event.ActionListener;
 
 import jakarta.inject.Singleton;
 
-/**
- * Layer: Boundary (GUI)
- * GRASP: Low Coupling (Interagisce solo con il Controller, non conosce Entity né Persistenza)
- * GRASP: High Cohesion (Gestisce esclusivamente l'interfaccia utente, validazione UI e raccolta input)
- */
 @Singleton
 public class BoundaryRegistraLezione extends JFrame {
 
@@ -25,17 +20,14 @@ public class BoundaryRegistraLezione extends JFrame {
     private JLabel errMessageLabel;
     private JPanel mainPanel;
 
-    private ControllerGestioneLezione controller;
+    private ControllerRegistroElettronico controller;
 
-    public BoundaryRegistraLezione() {
-        this.controller = new ControllerGestioneLezione();
-        inizializzaInterfaccia();
-    }
 
-    public BoundaryRegistraLezione(ControllerGestioneLezione controller) {
+    public BoundaryRegistraLezione(ControllerRegistroElettronico controller) {
         this.controller = controller;
         inizializzaInterfaccia();
     }
+
 
     private void inizializzaInterfaccia() {
         setTitle("Registra Lezione");
@@ -43,9 +35,9 @@ public class BoundaryRegistraLezione extends JFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLayout(new GridLayout(6, 2, 5, 5));
 
-        // Inizializzazione componenti
+
         add(new JLabel("Classe:"));
-        // Popolato idealmente solo con le classi del docente loggato (Regola di business 4)
+
         classeCombo = new JComboBox<>(new String[]{"Seleziona classe...", "1A", "2B", "3C"});
         add(classeCombo);
 
@@ -89,27 +81,41 @@ public class BoundaryRegistraLezione extends JFrame {
         String argomento = argomentoField.getText().trim();
         String descrizione = descrizioneField.getText().trim();
 
-        // Validazione: Argomento obbligatorio
+
         if (argomento.isEmpty()) {
-            errMessageLabel.setText("L'argomento e' obbligatorio");
+            errMessageLabel.setText("L'argomento è obbligatorio!");
             return;
         }
 
-        // Validazione: Classe non selezionata (mocking l'opzione vuota)
+
         if (idClasse == null || idClasse.equals("Seleziona classe...")) {
-            errMessageLabel.setText("Classe inesistente o non selezionata");
+            errMessageLabel.setText("Selezionare una classe!");
+            return;
+        }
+
+
+        java.time.LocalDate parsedDate;
+        try {
+            java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            parsedDate = java.time.LocalDate.parse(data, formatter);
+            if (parsedDate.isAfter(java.time.LocalDate.now())) {
+                errMessageLabel.setText("Data non valida (futuro)!");
+                return;
+            }
+        } catch (java.time.format.DateTimeParseException e) {
+            errMessageLabel.setText("Data non valida!");
             return;
         }
 
         // Delega al Controller
-        boolean successo = controller.registraLezione(idClasse, data, argomento, descrizione);
+        boolean successo = controller.registraLezione(idClasse, parsedDate, argomento, descrizione);
 
         if (successo) {
             errMessageLabel.setForeground(Color.GREEN); // Verde
-            errMessageLabel.setText("Lezione registrata con successo");
+            errMessageLabel.setText("Lezione registrata!");
         } else {
             errMessageLabel.setForeground(Color.RED);
-            errMessageLabel.setText("Classe inesistente o non selezionata");
+            errMessageLabel.setText("Errore durante la registrazione!");
         }
     }
 }

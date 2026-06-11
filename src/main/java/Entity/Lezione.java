@@ -1,7 +1,7 @@
 package Entity;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Layer: Entity (Domain Model)
@@ -15,8 +15,8 @@ public class Lezione {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Temporal(TemporalType.DATE)
-    private Date data;
+    @Column(nullable = false)
+    private LocalDate data;
 
     @Column(nullable = false)
     private String argomento;
@@ -31,7 +31,7 @@ public class Lezione {
     public Lezione() {
     }
 
-    public Lezione(Date data, String argomento, String descrizione) {
+    public Lezione(LocalDate data, String argomento, String descrizione) {
         this.data = data;
         this.argomento = argomento;
         this.descrizione = descrizione;
@@ -45,11 +45,11 @@ public class Lezione {
         this.id = id;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

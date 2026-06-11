@@ -5,11 +5,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 
-/**
- * Layer: Device (Persistenza)
- * GRASP: Pure Fabrication (Classe fittizia introdotta per isolare la logica di persistenza JPA)
- * GRASP: Information Expert (Esporta le operazioni di persistenza verso il database)
- */
+
 public class GestorePersistenza {
 
     public GestorePersistenza() {
@@ -82,12 +78,17 @@ public class GestorePersistenza {
         // we'll pass named parameters or just assume eseguiQuery is implemented to match string-value pairs.
         return query.getResultList();
     }
-    
-    // Metodo specifico per supportare la query con un parametro named come richiesto dal diagramma
+
     public <T> List<T> eseguiQueryNamedParam(String queryString, String paramName, Object paramValue, Class<T> resultClass) {
         EntityManager em = JpaUtil.getInstance().getEntityManager();
         TypedQuery<T> query = em.createQuery(queryString, resultClass);
         query.setParameter(paramName, paramValue);
         return query.getResultList();
     }
+
+
+
+    public Object trovaPer(Class<?> classe, String id) {
+        EntityManager em = JpaUtil.getInstance().getEntityManager();
+        return em.find(classe, id);}
 }

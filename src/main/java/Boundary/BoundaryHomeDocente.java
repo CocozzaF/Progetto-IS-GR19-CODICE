@@ -1,5 +1,6 @@
 package Boundary;
 
+import Control.ControllerRegistroElettronico;
 import javax.swing.*;
 
 public class BoundaryHomeDocente {
@@ -10,12 +11,18 @@ public class BoundaryHomeDocente {
     private JButton VisualizzaRegistro;
     private JButton MonitoraAndamento;
     private JButton RicercaDati;
+    private JLabel welcomeLabel;
 
     private BoundaryRegistraLezione boundaryRegistraLezione;
 
-    public BoundaryHomeDocente() {
+    public BoundaryHomeDocente(String nomeDocente) {
+        if (nomeDocente != null && !nomeDocente.trim().isEmpty()) {
+            welcomeLabel.setText("Benvenuto Prof. " + nomeDocente);
+        }
 
-        boundaryRegistraLezione = new BoundaryRegistraLezione();
+        ControllerRegistroElettronico controller = new ControllerRegistroElettronico();
+
+        boundaryRegistraLezione = new BoundaryRegistraLezione(controller);
 
         RegistraLezione.addActionListener(e ->
                 boundaryRegistraLezione.mostraSchermata()
@@ -44,10 +51,6 @@ public class BoundaryHomeDocente {
 
     public JPanel getMainPanel() {
         return mainPanel;
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }
 

@@ -21,7 +21,7 @@ public class JpaUtil {
 
     public void crea() {
         if (emf == null) {
-            emf = Persistence.createEntityManagerFactory("RegistroPU");
+            emf = Persistence.createEntityManagerFactory("prova");
         }
     }
 
