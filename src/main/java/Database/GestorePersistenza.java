@@ -1,94 +1,121 @@
 package Database;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
-import java.util.List;
 
+import java.util.List;
+import java.util.Map;
 
 public class GestorePersistenza {
 
-    public GestorePersistenza() {
-    }
-
-    public boolean salvaOggetto(Object oggetto) {
+    public boolean salva(Object oggetto) {
         EntityManager em = JpaUtil.getInstance().getEntityManager();
-        EntityTransaction tx = em.getTransaction();
         try {
-            tx.begin();
+            em.getTransaction().begin();
             em.persist(oggetto);
-            tx.commit();
+            em.getTransaction().commit();
             return true;
-        } catch (Exception e) {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             e.printStackTrace();
             return false;
+        } finally {
+            em.close();
         }
     }
 
-    public boolean aggiornaOggetto(Object oggetto) {
+    public <T> T trovaPerId(Class<T> classe, Object id) {
         EntityManager em = JpaUtil.getInstance().getEntityManager();
-        EntityTransaction tx = em.getTransaction();
         try {
-            tx.begin();
-            em.merge(oggetto);
-            tx.commit();
-            return true;
-        } catch (Exception e) {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-            return false;
+            return em.find(classe, id);
+        } finally {
+            em.close();
         }
     }
-    public boolean rimuoviOggetto(Object oggetto) {
+
+    public <T> List<T> cercaPerCampo(Class<T> classe, String nomeCampo, Object valore) {
+        return cercaPerCampi(classe, Map.of(nomeCampo, valore));
+    }
+
+    public <T> List<T> cercaPerCampi(Class<T> classe, Map<String, Object> campi) {
         EntityManager em = JpaUtil.getInstance().getEntityManager();
-        EntityTransaction tx = em.getTransaction();
         try {
-            tx.begin();
-            Object managed = em.merge(oggetto);
-            em.remove(managed);
-            tx.commit();
-            return true;
-        } catch (Exception e) {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
+            StringBuilder jpql = new StringBuilder();
+            jpql.append("SELECT e FROM ").append(classe.getSimpleName()).append(" e");
+
+            if (!campi.isEmpty()) {
+                jpql.append(" WHERE ");
+                int contatore = 0;
+                for (String nomeCampo : campi.keySet()) {
+                    if (contatore > 0) {
+                        jpql.append(" AND ");
+                    }
+                    String nomeParametro = nomeCampo.replace(".", "_");
+                    jpql.append("e.").append(nomeCampo).append(" = :").append(nomeParametro);
+                    contatore++;
+                }
             }
-            e.printStackTrace();
-            return false;
+
+            TypedQuery<T> query = em.createQuery(jpql.toString(), classe);
+            for (String nomeCampo : campi.keySet()) {
+                String nomeParametro = nomeCampo.replace(".", "_");
+                query.setParameter(nomeParametro, campi.get(nomeCampo));
+            }
+
+            return query.getResultList();
+        } finally {
+            em.close();
         }
     }
 
-    public Object trovaPer(Class<?> classe, Long id) {
-        EntityManager em = JpaUtil.getInstance().getEntityManager();
-        return em.find(classe, id);
+    public <T> T cercaPrimoPerCampi(Class<T> classe, Map<String, Object> campi) {
+        List<T> risultati = cercaPerCampi(classe, campi);
+        if (risultati.isEmpty()) {
+            return null;
+        }
+        return risultati.get(0);
     }
 
-    public <T> List<T> eseguiQuery(String nomeQuery, Class<T> resultClass, Object... parametri) {
+    public <T> T aggiorna(T oggetto) {
         EntityManager em = JpaUtil.getInstance().getEntityManager();
-        TypedQuery<T> query = em.createQuery(nomeQuery, resultClass);
-        // Note: as per the sequence diagram we pass arguments. 
-        // Here we just map positional parameters (1-based for JPA if using ?1) or 
-        // if using named parameters we'd need a Map. For simplicity we'll bind positionally 
-        // if positional, or handle specific map in a real scenario.
-        // Assuming the prompt's JPQL "SELECT c FROM ClasseVirtuale c WHERE c.cod=:cod", 
-        // we'll pass named parameters or just assume eseguiQuery is implemented to match string-value pairs.
-        return query.getResultList();
+        try {
+            em.getTransaction().begin();
+            T oggettoAggiornato = em.merge(oggetto);
+            em.getTransaction().commit();
+            return oggettoAggiornato;
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
-    public <T> List<T> eseguiQueryNamedParam(String queryString, String paramName, Object paramValue, Class<T> resultClass) {
+
+    public <T> boolean elimina(Class<T> classe, Object id) {
         EntityManager em = JpaUtil.getInstance().getEntityManager();
-        TypedQuery<T> query = em.createQuery(queryString, resultClass);
-        query.setParameter(paramName, paramValue);
-        return query.getResultList();
+        try {
+            em.getTransaction().begin();
+            T oggetto = em.find(classe, id);
+            if (oggetto != null) {
+                em.remove(oggetto);
+                em.getTransaction().commit();
+                return true;
+            }
+            em.getTransaction().commit();
+            return false;
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            em.close();
+        }
     }
-
-
-
-    public Object trovaPer(Class<?> classe, String id) {
-        EntityManager em = JpaUtil.getInstance().getEntityManager();
-        return em.find(classe, id);}
 }

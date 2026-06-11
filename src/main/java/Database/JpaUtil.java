@@ -9,23 +9,25 @@ public class JpaUtil {
     private EntityManagerFactory emf;
 
     private JpaUtil() {
-        crea();
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory("prova");
+        }
     }
 
-    public static synchronized JpaUtil getInstance() {
+    public static JpaUtil getInstance() {
         if (instance == null) {
             instance = new JpaUtil();
         }
         return instance;
     }
 
-    public void crea() {
-        if (emf == null) {
-            emf = Persistence.createEntityManagerFactory("prova");
-        }
-    }
-
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+
+    public void close() {
+        if (emf != null && emf.isOpen()) {
+            emf.close();
+        }
     }
 }
