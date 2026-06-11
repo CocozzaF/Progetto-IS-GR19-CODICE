@@ -1,25 +1,60 @@
 package Entity;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class ClasseVirtuale {
-    private String idClasse;
-    private List<Compito> compitiAssegnati;
+/**
 
-    public ClasseVirtuale(String idClasse) {
-        this.idClasse = idClasse;
-        this.compitiAssegnati = new ArrayList<>();
+ Entity: ClasseVirtuale*/
+@Entity
+@Table(name = "classe_virtuale")
+public class ClasseVirtuale {
+
+    @Id
+    @Column(name = "codice_univoco")
+    private String cod;
+
+    // Aggiungere anche nome e docente se non presenti
+    @Column(name = "nome")
+    private String nome;
+
+    @ManyToOne
+    @JoinColumn(name = "docente_id")
+    private Docente docente;
+
+    @OneToMany(mappedBy = "classeVirtuale", cascade = CascadeType.ALL)
+    private List<Lezione> lezioni = new ArrayList<>();
+
+
+    public ClasseVirtuale() {}
+
+    public String getCod() { return cod; }
+    public void setCod(String cod) { this.cod = cod; }
+
+    public List<Lezione> getLezioni() { return lezioni; }
+    
+    public void setLezioni(List<Lezione> lezioni) { this.lezioni = lezioni; }
+
+    public void aggiungiLezione(Lezione lezione) {
+        lezioni.add(lezione);
+        lezione.setClasseVirtuale(this);
     }
 
-    public String getIdClasse() { return idClasse; }
-    public void setIdClasse(String idClasse) { this.idClasse = idClasse; }
-    public List<Compito> getCompitiAssegnati() { return compitiAssegnati; }
+    public void rimuoviLezione(Lezione lezione) {
+        lezioni.remove(lezione);
+        lezione.setClasseVirtuale(null);
+    }
 
-    public Compito creaCompito(String titolo, String descrizione, Date dataAssegnazione, Date dataScadenza) {
-        Compito nuovoCompito = new Compito(titolo, descrizione, dataAssegnazione, dataScadenza);
-        this.compitiAssegnati.add(nuovoCompito);
-        return nuovoCompito;
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+
+    public Docente getDocente() { return docente; }
+    public void setDocente(Docente docente) { this.docente = docente; }
+
+    @Override
+    public String toString() {
+        return "ClasseVirtuale{cod='" + cod + "', nome='" + nome + "'}";
     }
 }
