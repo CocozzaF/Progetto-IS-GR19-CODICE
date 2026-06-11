@@ -23,7 +23,7 @@ public class ClasseVirtuale {
     @JoinColumn(name = "docente_id")
     private Docente docente;
 
-    @OneToMany(mappedBy = "classeVirtuale", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "classeVirtuale", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lezione> lezioni = new ArrayList<>();
 
 

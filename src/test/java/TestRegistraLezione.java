@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
+import Database.GestorePersistenza;
+import Entity.ClasseVirtuale;
+import Entity.Docente;
+
 class TestRegistraLezione {
 
     private ControllerGestioneLezione controllerLezione;
@@ -11,6 +15,22 @@ class TestRegistraLezione {
     @BeforeEach
     void setUp() {
         controllerLezione = new ControllerGestioneLezione();
+        GestorePersistenza gp = new GestorePersistenza();
+        
+        Docente docente = gp.trovaPerId(Docente.class, "mario.rossi@ist.it");
+        if (docente == null) {
+            docente = new Docente("D12345", "Mario", "Rossi", "mario.rossi@ist.it", "password123");
+            gp.salva(docente);
+        }
+
+        ClasseVirtuale cv = gp.trovaPerId(ClasseVirtuale.class, "INFO-01");
+        if (cv == null) {
+            cv = new ClasseVirtuale();
+            cv.setCod("INFO-01");
+            cv.setNome("Informatica");
+            cv.setDocente(docente);
+            gp.salva(cv);
+        }
     }
 
     @Test

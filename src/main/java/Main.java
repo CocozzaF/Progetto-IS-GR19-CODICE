@@ -41,18 +41,21 @@ public class Main {
             Docente docente = em.find(Docente.class, "mario.rossi@ist.it");
             if (docente == null) {
                 docente = new Docente("D12345", "Mario", "Rossi", "mario.rossi@ist.it", "password123");
-                gp.salvaOggetto(docente);
+                gp.salva(docente);
                 System.out.println("Utente Docente di prova creato!");
             }
 
-            ClasseVirtuale cv = em.find(ClasseVirtuale.class, "CV001");
-            if (cv == null) {
-                cv = new ClasseVirtuale();
-                cv.setCod("CV001");
-                cv.setNome("Informatica 5A");
-                cv.setDocente(docente);
-                gp.salvaOggetto(cv);
-                System.out.println("Classe Virtuale di prova creata e associata al docente!");
+            String[] classiDaCreare = {"1A", "2B", "3C", "INFO-01"};
+            for (String codice : classiDaCreare) {
+                ClasseVirtuale cv = em.find(ClasseVirtuale.class, codice);
+                if (cv == null) {
+                    cv = new ClasseVirtuale();
+                    cv.setCod(codice);
+                    cv.setNome("Classe " + codice);
+                    cv.setDocente(docente);
+                    gp.salva(cv);
+                    System.out.println("Classe Virtuale " + codice + " creata e associata al docente!");
+                }
             }
         } finally {
             em.close();
