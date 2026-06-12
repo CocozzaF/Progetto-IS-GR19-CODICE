@@ -22,20 +22,28 @@ public class Main {
                 e.printStackTrace();
             }
 
-            JFrame frame = new JFrame("Registro Elettronico - Home Docente");
-            BoundaryHomeDocente homeDocente = new BoundaryHomeDocente("Mario Rossi");
-            
-            frame.setContentPane(homeDocente.getMainPanel());
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(600, 400);
-            frame.setLocationRelativeTo(null); // Centra la finestra
-            frame.setVisible(true);
+            Boundary.BoundaryMainFrame mainFrame = new Boundary.BoundaryMainFrame();
+            mainFrame.mostraSchermata();
         });
     }
 
     private static void inserisciDatiDiProva() {
         EntityManager em = JpaUtil.getInstance().getEntityManager();
         GestorePersistenza gp = new GestorePersistenza();
+
+        try {
+            em.getTransaction().begin();
+            em.createNativeQuery("CREATE TABLE IF NOT EXISTS iscrizione (" +
+                    "codice_classe VARCHAR(255), " +
+                    "studente_email VARCHAR(255), " +
+                    "PRIMARY KEY (codice_classe, studente_email))").executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
 
         try {
             Docente docente = em.find(Docente.class, "mario.rossi@ist.it");
