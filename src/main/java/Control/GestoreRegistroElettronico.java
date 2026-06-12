@@ -28,17 +28,24 @@ public class GestoreRegistroElettronico {
         return this.compitiCtrl.assegnaCompito(codiceUnivoco, titolo, descrizione, scadenza);
     }
 
-    public java.util.List<Entity.Studente> ricercaStudente(String nome) {
+    public java.util.List<String[]> ricercaStudente(String nome) {
         return ricercaCtrls.ricercaStudente(nome);
     }
 
-    public Entity.ClasseVirtuale ricercaClassePerCodice(String codice) {
+    public String[] ricercaClassePerCodice(String codice) {
         return ricercaCtrls.ricercaClassePerCodice(codice);
+    }
+
+    public java.util.List<String[]> ricercaLezioni(String codiceClasse) {
+        return ctrlLezione.getLezioniPerClasse(codiceClasse);
+    }
+
+    public java.util.List<String[]> getClassiPerStudente(String matricola) {
+        return ctrlLezione.getClassiPerStudente(matricola);
     }
     //Aggiunte di Giovanni
 
-
-    public Entity.Utente accedi(String email, String password) {
+    public java.util.ArrayList<String> accedi(String email, String password) {
         return utenzeCtrl.accedi(email, password);
     }
 
@@ -54,7 +61,7 @@ public class GestoreRegistroElettronico {
         return ctrlIscrizione.getUltimoErrore();
     }
 
-    public java.util.List<Entity.ClasseVirtuale> getClassiPerDocente(Entity.Docente docente) {
-        return ctrlLezione.getClassiPerDocente(docente);
+    public java.util.List<String[]> getClassiPerDocente(String emailDocente) {
+        return ctrlLezione.getClassiPerDocente(emailDocente);
     }
 }

@@ -15,28 +15,30 @@ public class BoundaryHomeDocente extends JFrame {
     private JLabel welcomeLabel;
 
     private BoundaryRegistraLezione boundaryRegistraLezione;
+    private String emailDocente;
 
-    public BoundaryHomeDocente(Entity.Docente docente) {
+    public BoundaryHomeDocente(String emailDocente, String nome, String cognome) {
+        this.emailDocente = emailDocente;
         setTitle("Home Docente");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLocationRelativeTo(null);
         setContentPane(mainPanel);
 
-        if (docente != null && docente.getCognome() != null && !docente.getCognome().trim().isEmpty()) {
-            welcomeLabel.setText("Benvenuto Prof. " + docente.getCognome());
+        if (cognome != null && !cognome.trim().isEmpty()) {
+            welcomeLabel.setText("Benvenuto Prof. " + cognome);
         }
 
         GestoreRegistroElettronico controller = new GestoreRegistroElettronico();
 
-        boundaryRegistraLezione = new BoundaryRegistraLezione(controller, docente);
+        boundaryRegistraLezione = new BoundaryRegistraLezione(controller, emailDocente);
 
         RegistraLezione.addActionListener(e ->
                 boundaryRegistraLezione.mostraSchermata()
         );
 
         AssegnaCompito.addActionListener(e -> {
-            BoundaryAssegnaCompito form = new BoundaryAssegnaCompito(controller, docente);
+            BoundaryAssegnaCompito form = new BoundaryAssegnaCompito(controller, emailDocente);
             form.mostraSchermata();
         });
 
@@ -44,9 +46,10 @@ public class BoundaryHomeDocente extends JFrame {
                 JOptionPane.showMessageDialog(mainPanel, "Funzionalita in sviluppo")
         );
 
-        VisualizzaRegistro.addActionListener(e -> 
-                JOptionPane.showMessageDialog(mainPanel, "Funzionalita in sviluppo")
-        );
+        VisualizzaRegistro.addActionListener(e -> {
+            BoundaryVisualizzaLezione form = new BoundaryVisualizzaLezione(emailDocente, controller, false);
+            form.mostraSchermata();
+        });
 
         MonitoraAndamento.addActionListener(e -> 
                 JOptionPane.showMessageDialog(mainPanel, "Funzionalita in sviluppo")

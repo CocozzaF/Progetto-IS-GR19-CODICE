@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import Entity.ClasseVirtuale;
-import Entity.Docente;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -23,12 +21,12 @@ public class BoundaryRegistraLezione extends JFrame {
     private JPanel mainPanel;
 
     private GestoreRegistroElettronico controller;
-    private Docente docente;
+    private String emailDocente;
 
 
-    public BoundaryRegistraLezione(GestoreRegistroElettronico controller, Docente docente) {
+    public BoundaryRegistraLezione(GestoreRegistroElettronico controller, String emailDocente) {
         this.controller = controller;
-        this.docente = docente;
+        this.emailDocente = emailDocente;
         inizializzaInterfaccia();
     }
 
@@ -65,11 +63,11 @@ public class BoundaryRegistraLezione extends JFrame {
         add(errMessageLabel);
 
         classeCombo.addItem("Seleziona classe...");
-        if (docente != null) {
-            List<ClasseVirtuale> classi = controller.getClassiPerDocente(docente);
+        if (emailDocente != null) {
+            List<String[]> classi = controller.getClassiPerDocente(emailDocente);
             if (classi != null) {
-                for (ClasseVirtuale cv : classi) {
-                    classeCombo.addItem(cv.getCod());
+                for (String[] cv : classi) {
+                    classeCombo.addItem(cv[0]);
                 }
             }
         }

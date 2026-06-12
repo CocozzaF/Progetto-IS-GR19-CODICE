@@ -7,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import Control.GestoreRegistroElettronico;
-import Entity.ClasseVirtuale;
-import Entity.Studente;
-import Entity.Utente;
 
 public class BoundaryRicercaDati extends JFrame {
 
@@ -77,11 +74,11 @@ public class BoundaryRicercaDati extends JFrame {
         
         try {
             GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
-            List<Studente> risultati = gestore.ricercaStudente(criterio);
+            List<String[]> risultati = gestore.ricercaStudente(criterio);
 
             if (risultati != null && !risultati.isEmpty()) {
-                for (Studente studente : risultati) {
-                    modelloTabella.addRow(new Object[]{studente.getNome(), studente.getCognome(), studente.getEmail_IST() + " / " + studente.getMatricola()});
+                for (String[] studente : risultati) {
+                    modelloTabella.addRow(new Object[]{studente[0], studente[1], studente[2] + " / " + studente[3]});
                 }
             } else {
                 ErrMessage.setText("Nessuno studente trovato o errore nei criteri.");
@@ -97,10 +94,10 @@ public class BoundaryRicercaDati extends JFrame {
         
         try {
             GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
-            ClasseVirtuale classe = gestore.ricercaClassePerCodice(criterio);
+            String[] classe = gestore.ricercaClassePerCodice(criterio);
 
             if (classe != null) {
-                modelloTabella.addRow(new Object[]{classe.getCod(), classe.getNome(), classe.getDocente()});
+                modelloTabella.addRow(new Object[]{classe[0], classe[1], classe[2]});
             } else {
                 ErrMessage.setText("Nessuna classe trovata o errore nei criteri.");
             }

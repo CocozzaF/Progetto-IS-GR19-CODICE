@@ -39,6 +39,9 @@ public class Compito {
         //this.valutazioni = new java.util.ArrayList<>();
     }
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public String getTitolo() { return Titolo; }
     public void setTitolo(String Titolo) { this.Titolo = Titolo; }
 

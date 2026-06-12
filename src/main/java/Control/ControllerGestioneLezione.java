@@ -1,29 +1,26 @@
 package Control;
 
 import Database.GestorePersistenza;
-import Entity.ClasseVirtuale;
-import Entity.Docente;
-import Entity.Lezione;
-import Entity.RegistroClassi;
+import java.util.ArrayList;
 import Boundary.BoundaryGestoreNotifica;
 
 
 public class ControllerGestioneLezione {
 
-    private RegistroClassi registroClassi;
-    private GestorePersistenza gestorePersistenza;
+    private Entity.RegistroClassi registroClassi;
+    private Database.GestorePersistenza gestorePersistenza;
 
     public ControllerGestioneLezione() {
-        this.registroClassi = new RegistroClassi();
-        this.gestorePersistenza = new GestorePersistenza();
+        this.registroClassi = new Entity.RegistroClassi();
+        this.gestorePersistenza = new Database.GestorePersistenza();
     }
 
-    public ControllerGestioneLezione(RegistroClassi registroClassi) {
+    public ControllerGestioneLezione(Entity.RegistroClassi registroClassi) {
         this.registroClassi = registroClassi;
-        this.gestorePersistenza = new GestorePersistenza();
+        this.gestorePersistenza = new Database.GestorePersistenza();
     }
     
-    public ControllerGestioneLezione(RegistroClassi registroClassi, GestorePersistenza gestorePersistenza) {
+    public ControllerGestioneLezione(Entity.RegistroClassi registroClassi, Database.GestorePersistenza gestorePersistenza) {
         this.registroClassi = registroClassi;
         this.gestorePersistenza = gestorePersistenza;
     }
@@ -36,29 +33,23 @@ public class ControllerGestioneLezione {
             return false;
         }
 
-        ClasseVirtuale classeVirtuale = registroClassi.getClasseVirtuale(idClasse);
-        if (classeVirtuale == null) {
-            return false;
+        boolean success = registroClassi.registraLezione(idClasse, data, argomento, descrizione);
+        if (success) {
+            BoundaryGestoreNotifica.notificaNuovaLezione(idClasse);
         }
-
-        Lezione nuovaLez = new Lezione(data, argomento, descrizione);
-
-        classeVirtuale.aggiungiLezione(nuovaLez);
-
-        boolean salvataLezione = gestorePersistenza.salva(nuovaLez);
-        if (!salvataLezione) return false;
-
-        try {
-            gestorePersistenza.aggiorna(classeVirtuale);
-        } catch (Exception e) {
-            return false;
-        }
-        BoundaryGestoreNotifica.notificaNuovaLezione(idClasse);
-
-        return true;
+        return success;
     }
 
-    public java.util.List<ClasseVirtuale> getClassiPerDocente(Entity.Docente docente) {
-        return registroClassi.getClassiPerDocente(docente);
+
+    public java.util.List<String[]> getClassiPerDocente(String emailDocente) {
+        return registroClassi.getClassiPerDocenteStr(emailDocente);
+    }
+
+    public java.util.List<String[]> getClassiPerStudente(String matricola) {
+        return registroClassi.getClassiPerStudenteStr(matricola);
+    }
+
+    public java.util.List<String[]> getLezioniPerClasse(String codiceClasse) {
+        return registroClassi.getLezioniClasseStr(codiceClasse);
     }
 }

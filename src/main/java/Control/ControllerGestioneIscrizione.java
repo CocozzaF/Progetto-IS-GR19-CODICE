@@ -1,33 +1,29 @@
 package Control;
 
-import Database.GestorePersistenza;
-import Entity.ClasseVirtuale;
-import Entity.Studente;
-import java.util.List;
+import Entity.RegistroClassi;
 
 
 public class ControllerGestioneIscrizione {
 
-    private GestorePersistenza gp;
+    private Entity.RegistroClassi registroClassi;
 
     /**
      * Memorizza il motivo dell'ultimo fallimento.
-     * Valori possibili: "CODICE_NON_VALIDO", "GIA_ISCRITTO"
+     * Valori possibili: "CODICE_NON_VALIDO", "GIA_ISCRITTO", "STUDENTE_NON_TROVATO"
      * Consultato dal Boundary per mostrare il messaggio corretto (TC-2, TC-3).
      */
     private String ultimoErrore;
 
     /** Costruttore di produzione */
     public ControllerGestioneIscrizione() {
-        this.gp = new GestorePersistenza();
+        this.registroClassi = new Entity.RegistroClassi();
     }
 
     /**
-     * Costruttore package-private per i test (dependency injection).
-     * Permette di iniettare un GestorePersistenza mock senza toccare il DB reale.
+     * Costruttore package-private per i test.
      */
-    ControllerGestioneIscrizione(GestorePersistenza gp) {
-        this.gp = gp;
+    ControllerGestioneIscrizione(Entity.RegistroClassi registroClassi) {
+        this.registroClassi = registroClassi;
     }
 
     /** Restituisce il motivo dell'ultimo errore (usato da Boundary e test). */
@@ -35,59 +31,16 @@ public class ControllerGestioneIscrizione {
 
 
     public boolean iscrizioneAutonoma(String codiceUnivoco, String matricolaStudente) {
-
-        // Passi 4-5: cerca la classe per codice univoco
-        List<ClasseVirtuale> risultati = gp.cercaPerCampo(
-                ClasseVirtuale.class,
-                "cod",
-                codiceUnivoco
-        );
-
-        // Passo 5 alt [TC-2]: lista vuota → codice non valido
-        if (risultati == null || risultati.isEmpty()) {
-            ultimoErrore = "CODICE_NON_VALIDO";
-            return false;  // passo 19
+        String[] errorHolder = new String[1];
+        boolean success = registroClassi.iscrizioneAutonoma(codiceUnivoco, matricolaStudente, errorHolder);
+        if (!success) {
+            ultimoErrore = errorHolder[0];
         }
-
-        // Passo 6: estrae la classe trovata
-        ClasseVirtuale classeTrovata = risultati.get(0);
-
-        // Passi 7-8: recupera lo studente per matricola tramite query (non è più la Primary Key JPA)
-        List<Studente> resStud = gp.cercaPerCampo(
-                Studente.class,
-                "matricola",
-                matricolaStudente
-        );
-        Studente studenteCorrente = (resStud != null && !resStud.isEmpty()) ? resStud.get(0) : null;
-
-        if (studenteCorrente == null) {
-            ultimoErrore = "STUDENTE_NON_TROVATO";
-            return false;
-        }
-
-        // Passo 9: verifica se già iscritto [TC-3]
-        if (verificaIscrizioneEsistente(classeTrovata, studenteCorrente)) {
-            ultimoErrore = "GIA_ISCRITTO";
-            return false;  // passo 16
-        }
-
-        // Passo 10: aggiunge lo studente alla lista della classe [TC-1]
-        classeTrovata.getStudenti().add(studenteCorrente);
-
-        // Passi 11-12: persiste l'aggiornamento nel DB
-        gp.aggiorna(classeTrovata);
-
-        return true;  // passo 13
+        return success;
     }
 
 
-     //Verifica se lo studente è già nella lista della classe.
 
-
-    boolean verificaIscrizioneEsistente(ClasseVirtuale classe, Studente studente) {
-        return classe.getStudenti() != null &&
-                classe.getStudenti().contains(studente);
-    }
 
 
 
@@ -99,7 +52,7 @@ public class ControllerGestioneIscrizione {
 
     // metodi per i test
 
-    public List<Studente> getStudentiIscritti(String idClasse) {
+    public java.util.List<String[]> getStudentiIscritti(String idClasse) {
         return null;
     }
 

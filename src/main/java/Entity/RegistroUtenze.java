@@ -26,6 +26,23 @@ public class RegistroUtenze {
         return null;
     }
 
+    public java.util.ArrayList<String> verificaCredenzialiStr(String email, String pass) {
+        Utente u = verificaCredenziali(email, pass);
+        if (u == null) return null;
+        
+        java.util.ArrayList<String> dati = new java.util.ArrayList<>();
+        if (u instanceof Studente) {
+            dati.add("Studente");      // Indice 0: Ruolo
+            dati.add(((Studente) u).getMatricola()); // Indice 1: Matricola
+        } else if (u instanceof Docente) {
+            dati.add("Docente");
+            dati.add(u.getEmail_IST()); // Indice 1: Email
+        }
+        dati.add(u.getNome());         // Indice 2: Nome
+        dati.add(u.getCognome());      // Indice 3: Cognome
+        return dati;
+    }
+
     public boolean esisteEmail(String email) {
         List<Utente> risultati = gestorePersistenza.cercaPerCampo(
                 Utente.class,
@@ -74,8 +91,36 @@ public class RegistroUtenze {
         return gestorePersistenza.cercaPerCampo(Studente.class, "nome", nome);
     }
 
+    public java.util.ArrayList<String[]> cercaStudenteStr(String nome) {
+        List<Studente> studenti = cercaStudente(nome);
+        java.util.ArrayList<String[]> risultati = new java.util.ArrayList<>();
+        for (Studente s : studenti) {
+            risultati.add(new String[]{s.getNome(), s.getCognome(), s.getEmail_IST(), s.getMatricola()});
+        }
+        return risultati;
+    }
+
     public Studente cercaUtentePerEmail(String email) {
-        return gestorePersistenza.cercaPrimoPerCampi(Studente.class, java.util.Map.of("email", email));
+        return gestorePersistenza.cercaPrimoPerCampi(Studente.class, java.util.Map.of("email_IST", email));
+    }
+
+    public boolean registraUtente(String nome, String cognome, String email, String pwd, String ruolo) {
+        if (esisteEmail(email)) {
+            return false;
+        }
+
+        String nuovaMatricola = generaNuovaMatricola(ruolo);
+        if (nuovaMatricola == null) return false;
+
+        Utente nuovoUtente;
+        if (ruolo.equalsIgnoreCase("studente")) {
+            nuovoUtente = new Studente(nuovaMatricola, nome, cognome, email, pwd);
+        } else if (ruolo.equalsIgnoreCase("docente")) {
+            nuovoUtente = new Docente(nuovaMatricola, nome, cognome, email, pwd);
+        } else {
+            return false;
+        }
+
+        return salvaUtente(nuovoUtente);
     }
 }
-

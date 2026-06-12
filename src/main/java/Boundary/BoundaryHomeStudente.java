@@ -59,8 +59,8 @@ public class BoundaryHomeStudente extends JFrame {
     }
 
     public void VisualizzaLezioni() {
-        // Da implementare
-        JOptionPane.showMessageDialog(mainPanel, "Funzionalita in sviluppo");
+        BoundaryVisualizzaLezione form = new BoundaryVisualizzaLezione(matricolaStudente, new GestoreRegistroElettronico(), true);
+        form.mostraSchermata();
     }
 
     public void IscrivitiClasse() {

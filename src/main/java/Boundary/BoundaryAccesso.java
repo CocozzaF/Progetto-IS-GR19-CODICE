@@ -2,9 +2,7 @@ package Boundary;
 
 
 import Control.GestoreRegistroElettronico;
-import Entity.Docente;
-import Entity.Studente;
-import Entity.Utente;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -50,22 +48,24 @@ public class BoundaryAccesso extends JFrame {
             return;
         }
 
-        Utente utenteLoggato = ctrl.accedi(email, pwd);
+        java.util.ArrayList<String> datiLoggato = ctrl.accedi(email, pwd);
 
-        if (utenteLoggato == null) {
+        if (datiLoggato == null) {
             lblErrMessage.setText("Credenziali non valide!");
         } else {
             lblErrMessage.setText("Accesso effettuato!");
-            this.dispose(); // chiudi la finestra di login
+            this.dispose();
 
-            // Gestione dei ruoli
-            if (utenteLoggato instanceof Studente) {
-                Studente s = (Studente) utenteLoggato;
-                BoundaryHomeStudente home = new BoundaryHomeStudente(s.getMatricola(), s.getNome(), s.getCognome());
+            String ruolo = datiLoggato.get(0);
+            String id = datiLoggato.get(1);
+            String nome = datiLoggato.get(2);
+            String cognome = datiLoggato.get(3);
+
+            if ("Studente".equalsIgnoreCase(ruolo)) {
+                BoundaryHomeStudente home = new BoundaryHomeStudente(id, nome, cognome);
                 home.mostraSchermata();
-            } else if (utenteLoggato instanceof Docente) {
-                Docente d = (Docente) utenteLoggato;
-                BoundaryHomeDocente homeD = new BoundaryHomeDocente(d);
+            } else if ("Docente".equalsIgnoreCase(ruolo)) {
+                BoundaryHomeDocente homeD = new BoundaryHomeDocente(id, nome, cognome);
                 homeD.mostraSchermata();
             }
         }

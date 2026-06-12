@@ -14,7 +14,6 @@ public class Studente extends Utente {
     private String matricola;
 
     @ManyToMany(mappedBy = "studenti", fetch = FetchType.LAZY)
-
     private List<ClasseVirtuale> classiVirtuali = new ArrayList<>();
 
     public Studente() {}

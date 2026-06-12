@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import Entity.ClasseVirtuale;
-import Entity.Docente;
 
 public class BoundaryAssegnaCompito {
 
@@ -21,18 +19,18 @@ public class BoundaryAssegnaCompito {
     private JLabel ErrMessage;
 
     private Control.GestoreRegistroElettronico controller;
-    private Docente docente;
+    private String emailDocente;
 
-    public BoundaryAssegnaCompito(Control.GestoreRegistroElettronico controller, Docente docente) {
+    public BoundaryAssegnaCompito(Control.GestoreRegistroElettronico controller, String emailDocente) {
         this.controller = controller;
-        this.docente = docente;
+        this.emailDocente = emailDocente;
 
         classeCombo.addItem("Seleziona classe...");
-        if (docente != null) {
-            List<ClasseVirtuale> classi = controller.getClassiPerDocente(docente);
+        if (emailDocente != null) {
+            List<String[]> classi = controller.getClassiPerDocente(emailDocente);
             if (classi != null) {
-                for (ClasseVirtuale cv : classi) {
-                    classeCombo.addItem(cv.getCod());
+                for (String[] cv : classi) {
+                    classeCombo.addItem(cv[0]);
                 }
             }
         }

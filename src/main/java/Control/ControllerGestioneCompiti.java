@@ -1,7 +1,6 @@
 package Control;
 
 import Entity.RegistroClassi;
-import Entity.Compito;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -9,10 +8,10 @@ import java.util.ArrayList;
 
 public class ControllerGestioneCompiti {
 
-    private RegistroClassi registroClassi;
+    private Entity.RegistroClassi registroClassi;
 
     public ControllerGestioneCompiti() {
-        this.registroClassi = new RegistroClassi();
+        this.registroClassi = new Entity.RegistroClassi();
     }
 
     public boolean assegnaCompito(String codiceUnivoco, String titolo, String descrizione, Date scadenza) {
@@ -37,22 +36,20 @@ public class ControllerGestioneCompiti {
         }
     }
 
-    public List<Compito> getCompitiClasse(String codiceUnivoco) {
-        return registroClassi.getCompitiClasse(codiceUnivoco);
+    public List<String[]> getCompitiClasse(String codiceUnivoco) {
+        return registroClassi.getCompitiClasseStr(codiceUnivoco);
     }
 
-    public Compito getDettaglioCompito(Long id) {
-        return registroClassi.getDettaglioCompito(id);
+    public String[] getDettaglioCompito(Long id) {
+        return registroClassi.getDettaglioCompitoStr(id);
     }
 
-    public boolean modificaCompiti(Compito compito) {
-        if (compito == null)
-            return false;
-        return registroClassi.aggiornaCompito(compito);
+    public boolean modificaCompiti(Long id, String titolo, String descrizione, Date scadenza) {
+        return registroClassi.modificaCompito(id, titolo, descrizione, scadenza);
     }
 
-    public void notificaNuovoCompito(String codiceUnivoco, Compito compito) {
+    public void notificaNuovoCompito(String codiceUnivoco, String titolo) {
         System.out.println(
-                "Notifica: Assegnato nuovo compito '" + compito.getTitolo() + "' alla classe " + codiceUnivoco);
+                "Notifica: Assegnato nuovo compito '" + titolo + "' alla classe " + codiceUnivoco);
     }
 }
