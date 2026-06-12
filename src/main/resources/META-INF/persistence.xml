@@ -17,7 +17,7 @@
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/prova?createDatabaseIfNotExist=true"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value="MySQL1606_"/>
+            <property name="jakarta.persistence.jdbc.password" value="Gh0808@215i"/>
 
             <!-- Hibernate Properties -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
