@@ -10,7 +10,7 @@ public class JpaUtil {
 
     private JpaUtil() {
         if (emf == null) {
-            emf = Persistence.createEntityManagerFactory("prova");
+            emf = Persistence.createEntityManagerFactory("Progetto_IS_GR19");
         }
     }
 

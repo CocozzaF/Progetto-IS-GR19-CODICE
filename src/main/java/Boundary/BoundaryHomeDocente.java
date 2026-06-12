@@ -23,8 +23,8 @@ public class BoundaryHomeDocente extends JFrame {
         setLocationRelativeTo(null);
         setContentPane(mainPanel);
 
-        if (docente != null && docente.getNome() != null && !docente.getNome().trim().isEmpty()) {
-            welcomeLabel.setText("Benvenuto Prof. " + docente.getNome());
+        if (docente != null && docente.getCognome() != null && !docente.getCognome().trim().isEmpty()) {
+            welcomeLabel.setText("Benvenuto Prof. " + docente.getCognome());
         }
 
         GestoreRegistroElettronico controller = new GestoreRegistroElettronico();
