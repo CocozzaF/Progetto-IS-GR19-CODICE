@@ -2,9 +2,11 @@ package Control;
 
 import Database.GestorePersistenza;
 import Entity.ClasseVirtuale;
+import Entity.Docente;
 import Entity.Lezione;
 import Entity.RegistroClassi;
 import Boundary.BoundaryGestoreNotifica;
+
 
 public class ControllerGestioneLezione {
 
@@ -39,7 +41,7 @@ public class ControllerGestioneLezione {
             return false;
         }
 
-        Lezione nuovaLez = registroClassi.creaLezione(data, argomento, descrizione);
+        Lezione nuovaLez = new Lezione(data, argomento, descrizione);
 
         classeVirtuale.aggiungiLezione(nuovaLez);
 
@@ -51,9 +53,12 @@ public class ControllerGestioneLezione {
         } catch (Exception e) {
             return false;
         }
-
         BoundaryGestoreNotifica.notificaNuovaLezione(idClasse);
 
         return true;
+    }
+
+    public java.util.List<ClasseVirtuale> getClassiPerDocente(Entity.Docente docente) {
+        return registroClassi.getClassiPerDocente(docente);
     }
 }
