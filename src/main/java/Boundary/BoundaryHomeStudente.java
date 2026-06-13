@@ -19,12 +19,14 @@ public class BoundaryHomeStudente extends JFrame {
     private String cognomeStudente;
 
     private BoundaryVisualizzaLezione boundaryVisualizzaLezione;
+    private BoundaryConsultaCompiti boundaryConsultaCompiti;
 
     public BoundaryHomeStudente(String matricolaStudente, String nomeStudente, String cognomeStudente) {
         this.matricolaStudente = matricolaStudente;
         this.nomeStudente = nomeStudente;
         this.cognomeStudente = cognomeStudente;
         boundaryVisualizzaLezione = new BoundaryVisualizzaLezione(matricolaStudente, new GestoreRegistroElettronico(), true);
+        boundaryConsultaCompiti = new BoundaryConsultaCompiti(matricolaStudente, new GestoreRegistroElettronico(), true);
         inizializzaUI();
     }
 
@@ -57,8 +59,7 @@ public class BoundaryHomeStudente extends JFrame {
     }
 
     public void ConsultaCompiti() {
-        
-        JOptionPane.showMessageDialog(mainPanel, "Funzionalita in sviluppo");
+        boundaryConsultaCompiti.mostraSchermata();
     }
 
     public void VisualizzaLezioni() {

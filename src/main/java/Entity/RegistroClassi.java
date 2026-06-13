@@ -98,8 +98,13 @@ public class RegistroClassi {
         ArrayList<String[]> risultati = new ArrayList<>();
         if (compiti != null) {
             for (Compito c : compiti) {
-                risultati.add(new String[] { String.valueOf(c.getId()), c.getTitolo(), c.getDesc(),
-                        c.getData_Sc().toString() });
+                risultati.add(new String[] {
+                        String.valueOf(c.getId()),
+                        c.getTitolo() != null ? c.getTitolo() : "N/D",
+                        c.getData_As() != null ? c.getData_As().toString() : "N/D",
+                        c.getData_Sc() != null ? c.getData_Sc().toString() : "N/D",
+                        c.getDesc() != null ? c.getDesc() : "N/D"
+                });
             }
         }
         return risultati;

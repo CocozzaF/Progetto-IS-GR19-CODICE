@@ -46,6 +46,10 @@ public class GestoreRegistroElettronico {
         return ctrlLezione.getLezioniPerClasse(codiceClasse);
     }
 
+    public java.util.List<String[]> ricercaCompiti(String codiceClasse) {
+        return this.compitiCtrl.getCompitiClasse(codiceClasse);
+    }
+
     public java.util.List<String[]> getClassiPerStudente(String matricola) {
         return ctrlLezione.getClassiPerStudente(matricola);
     }
