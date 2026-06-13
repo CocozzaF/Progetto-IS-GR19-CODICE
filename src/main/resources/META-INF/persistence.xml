@@ -11,6 +11,9 @@
         <class>Entity.Lezione</class>
         <class>Entity.ClasseVirtuale</class>
         <class>Entity.Docente</class>
+        <class>Entity.Compito</class>
+        <class>Entity.Studente</class>
+        <class>Entity.Utente</class>
         
         <properties>
             <!-- Configurazione DB MySQL -->
