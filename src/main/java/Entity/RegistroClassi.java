@@ -38,6 +38,7 @@ public class RegistroClassi {
             gestorePersistenza.aggiorna(classeVirtuale);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -63,6 +64,7 @@ public class RegistroClassi {
                 gestorePersistenza.aggiorna(classe);
                 return true;
             } catch (Exception e) {
+                e.printStackTrace();
                 return false;
             }
         }
