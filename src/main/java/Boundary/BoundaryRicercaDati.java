@@ -94,10 +94,12 @@ public class BoundaryRicercaDati extends JFrame {
         
         try {
             GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
-            String[] classe = gestore.ricercaClassePerCodice(criterio);
+            List<String[]> classi = gestore.ricercaClassePerCodice(criterio);
 
-            if (classe != null) {
-                modelloTabella.addRow(new Object[]{classe[0], classe[1], classe[2]});
+            if (classi != null && !classi.isEmpty()) {
+                for (String[] classe : classi) {
+                    modelloTabella.addRow(new Object[]{classe[0], classe[1], classe[2]});
+                }
             } else {
                 ErrMessage.setText("Nessuna classe trovata o errore nei criteri.");
             }

@@ -20,7 +20,7 @@ public abstract class Utente {
     @Column(name = "password", nullable = false)
     private String password;
 
-    // --- COSTRUTTORI ---
+    
 
     public Utente() {
     }
@@ -32,7 +32,7 @@ public abstract class Utente {
         this.password = password;
     }
 
-    // --- GETTER E SETTER ---
+    
 
     public String getNome() {
         return nome;

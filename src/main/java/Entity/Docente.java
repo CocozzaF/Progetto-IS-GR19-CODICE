@@ -10,7 +10,7 @@ public class Docente extends Utente {
     @Column(unique = true, nullable = false)
     private String matricola;
 
-    // --- COSTRUTTORI ---
+    
 
     public Docente() {
         super();
@@ -21,7 +21,7 @@ public class Docente extends Utente {
         this.matricola = matricola;
     }
 
-    // --- GETTER E SETTER ---
+    
 
     public String getMatricola() {
         return matricola;

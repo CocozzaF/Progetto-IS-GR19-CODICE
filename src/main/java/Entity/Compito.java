@@ -25,10 +25,7 @@ public class Compito {
     @Temporal(TemporalType.DATE)
     private Date Data_Sc;
 
-    /*
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "compito")
-    private java.util.List<Valutazione> valutazioni;
-   */
+    
     public Compito() {}
 
     public Compito(String Titolo, String Desc, Date Data_As, Date Data_Sc) {
@@ -36,7 +33,7 @@ public class Compito {
         this.Desc = Desc;
         this.Data_As = Data_As;
         this.Data_Sc = Data_Sc;
-        //this.valutazioni = new java.util.ArrayList<>();
+        
     }
 
     public Long getId() { return id; }
@@ -54,9 +51,5 @@ public class Compito {
     public Date getData_Sc() { return Data_Sc; }
     public void setData_Sc(Date Data_Sc) { this.Data_Sc = Data_Sc; }
 
-    /*
-    public java.util.List<Valutazione> getValutazioni() { return valutazioni; }
-    public void setValutazioni(java.util.List<Valutazione> valutazioni) { this.valutazioni = valutazioni; }
-
-     */
+    
 }

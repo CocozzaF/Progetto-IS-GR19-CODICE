@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
-/**Entity: ClasseVirtuale*/
+
 @Entity
 @Table(name = "classe_virtuale")
 public class ClasseVirtuale {
@@ -26,13 +26,13 @@ public class ClasseVirtuale {
     @OneToMany(mappedBy = "classeVirtuale", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lezione> lezioni = new ArrayList<>();
 
-    //Aggiunta di Francesco
+    
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "codice_univoco")
     private List<Compito> compitiAssegnati;
 
-    //Aggiunta di Giovanni
+    
 
 
 
@@ -82,7 +82,7 @@ public class ClasseVirtuale {
     public Docente getDocente() { return docente; }
     public void setDocente(Docente docente) { this.docente = docente; }
 
-    //Aggiunte di francesco
+    
 
     public List<Compito> getCompitiAssegnati() { return compitiAssegnati; }
     public void setCompitiAssegnati(List<Compito> compitiAssegnati) { this.compitiAssegnati = compitiAssegnati; }
@@ -99,7 +99,7 @@ public class ClasseVirtuale {
         return nuovaLezione;
     }
 
-    //aggiunte di Giovanni
+    
 
     public List<Studente> getStudenti() { return studenti; }
     public void setStudenti(List<Studente> studenti) { this.studenti = studenti; }

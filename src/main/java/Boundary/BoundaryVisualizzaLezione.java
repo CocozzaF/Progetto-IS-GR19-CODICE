@@ -44,7 +44,7 @@ public class BoundaryVisualizzaLezione extends JFrame {
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Top Panel for Class Selection
+        
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(new JLabel("Seleziona Classe: "));
         comboClassi = new JComboBox<>();
@@ -61,7 +61,7 @@ public class BoundaryVisualizzaLezione extends JFrame {
         topPanel.add(comboClassi);
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
-        // Center Panel for Lessons Table
+        
         String[] columnNames = {"Data", "Argomento", "Descrizione"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override

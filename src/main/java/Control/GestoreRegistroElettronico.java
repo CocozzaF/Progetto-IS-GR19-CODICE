@@ -32,7 +32,7 @@ public class GestoreRegistroElettronico {
         return ricercaCtrls.ricercaStudente(nome);
     }
 
-    public String[] ricercaClassePerCodice(String codice) {
+    public java.util.List<String[]> ricercaClassePerCodice(String codice) {
         return ricercaCtrls.ricercaClassePerCodice(codice);
     }
 
@@ -43,7 +43,7 @@ public class GestoreRegistroElettronico {
     public java.util.List<String[]> getClassiPerStudente(String matricola) {
         return ctrlLezione.getClassiPerStudente(matricola);
     }
-    //Aggiunte di Giovanni
+    
 
     public java.util.ArrayList<String> accedi(String email, String password) {
         return utenzeCtrl.accedi(email, password);

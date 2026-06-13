@@ -23,20 +23,17 @@ public class BoundaryRegistraLezione extends JFrame {
     private GestoreRegistroElettronico controller;
     private String emailDocente;
 
-
     public BoundaryRegistraLezione(GestoreRegistroElettronico controller, String emailDocente) {
         this.controller = controller;
         this.emailDocente = emailDocente;
         inizializzaInterfaccia();
     }
 
-
     private void inizializzaInterfaccia() {
         setTitle("Registra Lezione");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLayout(new GridLayout(6, 2, 5, 5));
-
 
         add(new JLabel("Classe:"));
 
@@ -72,7 +69,6 @@ public class BoundaryRegistraLezione extends JFrame {
             }
         }
 
-        // Collegamento evento
         registraLezBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,18 +89,15 @@ public class BoundaryRegistraLezione extends JFrame {
         String argomento = argomentoField.getText().trim();
         String descrizione = descrizioneField.getText().trim();
 
-
         if (argomento.isEmpty()) {
             errMessageLabel.setText("L'argomento è obbligatorio!");
             return;
         }
 
-
         if (idClasse == null || idClasse.equals("Seleziona classe...")) {
             errMessageLabel.setText("Selezionare una classe!");
             return;
         }
-
 
         java.time.LocalDate parsedDate;
         try {
@@ -119,11 +112,10 @@ public class BoundaryRegistraLezione extends JFrame {
             return;
         }
 
-        // Delega al Controller
         boolean successo = controller.registraLezione(idClasse, parsedDate, argomento, descrizione);
 
         if (successo) {
-            errMessageLabel.setForeground(Color.GREEN); // Verde
+            errMessageLabel.setForeground(Color.GREEN);
             errMessageLabel.setText("Lezione registrata!");
         } else {
             errMessageLabel.setForeground(Color.RED);

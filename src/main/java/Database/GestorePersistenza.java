@@ -96,6 +96,18 @@ public class GestorePersistenza {
     }
 
 
+    public <T> List<T> cercaPerCampoLike(Class<T> classe, String nomeCampo, String valore) {
+        EntityManager em = JpaUtil.getInstance().getEntityManager();
+        try {
+            String jpql = "SELECT e FROM " + classe.getSimpleName() + " e WHERE LOWER(e." + nomeCampo + ") LIKE LOWER(:valore)";
+            TypedQuery<T> query = em.createQuery(jpql, classe);
+            query.setParameter("valore", "%" + valore + "%");
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
     public <T> boolean elimina(Class<T> classe, Object id) {
         EntityManager em = JpaUtil.getInstance().getEntityManager();
         try {
