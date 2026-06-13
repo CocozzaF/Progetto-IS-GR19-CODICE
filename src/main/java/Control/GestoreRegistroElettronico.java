@@ -4,20 +4,18 @@ import java.util.Date;
 
 public class GestoreRegistroElettronico {
 
+    private ControllerGestioneUtenze utenzaCtrl;
+    private ControllerGestioneIscrizione iscrizioneCtrl;
+    private ControllerGestioneCompiti compitiCtrl;
     private ControllerGestioneLezione ctrlLezione;
     private ControllerRicerca ricercaCtrls;
-    private ControllerGestioneUtenze utenzeCtrl;
-    private ControllerGestioneCompiti compitiCtrl;
-    private ControllerGestioneIscrizione ctrlIscrizione;
-    private Object classiCtrl;
 
     public GestoreRegistroElettronico() {
-
-        this.ctrlLezione = new ControllerGestioneLezione();
+        this.utenzaCtrl = new ControllerGestioneUtenze();
+        this.iscrizioneCtrl = new ControllerGestioneIscrizione();
         this.compitiCtrl = new ControllerGestioneCompiti();
+        this.ctrlLezione = new ControllerGestioneLezione();
         this.ricercaCtrls = new ControllerRicerca();
-        this.utenzeCtrl =  new ControllerGestioneUtenze();
-        this.ctrlIscrizione = new ControllerGestioneIscrizione();
     }
 
     public boolean registraLezione(String idClasse, java.time.LocalDate data, String argomento, String descrizione) {
@@ -32,8 +30,16 @@ public class GestoreRegistroElettronico {
         return ricercaCtrls.ricercaStudente(nome);
     }
 
+    public java.util.List<String[]> ricercaDocente(String nome) {
+        return ricercaCtrls.ricercaDocente(nome);
+    }
+
     public java.util.List<String[]> ricercaClassePerCodice(String codice) {
         return ricercaCtrls.ricercaClassePerCodice(codice);
+    }
+
+    public java.util.List<String[]> ricercaClassePerNome(String nome) {
+        return ricercaCtrls.ricercaClassePerNome(nome);
     }
 
     public java.util.List<String[]> ricercaLezioni(String codiceClasse) {
@@ -43,25 +49,24 @@ public class GestoreRegistroElettronico {
     public java.util.List<String[]> getClassiPerStudente(String matricola) {
         return ctrlLezione.getClassiPerStudente(matricola);
     }
-    
 
-    public java.util.ArrayList<String> accedi(String email, String password) {
-        return utenzeCtrl.accedi(email, password);
-    }
-
-    public boolean registraUtente(String nome, String cognome, String email, String pwd, String ruolo) {
-        return utenzeCtrl.registraUtente(nome, cognome, email, pwd, ruolo);
+    public java.util.List<String[]> getClassiPerDocente(String email) {
+        return ctrlLezione.getClassiPerDocente(email);
     }
 
     public boolean iscrizioneAutonoma(String codiceUnivoco, String matricolaStudente) {
-        return ctrlIscrizione.iscrizioneAutonoma(codiceUnivoco, matricolaStudente);
+        return iscrizioneCtrl.iscrizioneAutonoma(codiceUnivoco, matricolaStudente);
     }
 
     public String getUltimoErroreIscrizione() {
-        return ctrlIscrizione.getUltimoErrore();
+        return iscrizioneCtrl.getUltimoErrore();
     }
 
-    public java.util.List<String[]> getClassiPerDocente(String emailDocente) {
-        return ctrlLezione.getClassiPerDocente(emailDocente);
+    public java.util.ArrayList<String> accedi(String email, String pwd) {
+        return utenzaCtrl.accedi(email, pwd);
+    }
+
+    public boolean registraUtente(String nome, String cognome, String email, String pwd, String ruolo) {
+        return utenzaCtrl.registraUtente(nome, cognome, email, pwd, ruolo);
     }
 }

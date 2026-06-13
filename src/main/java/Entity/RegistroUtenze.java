@@ -3,7 +3,6 @@ package Entity;
 import Database.GestorePersistenza;
 import java.util.List;
 
-
 public class RegistroUtenze {
 
     private GestorePersistenza gestorePersistenza;
@@ -94,6 +93,19 @@ public class RegistroUtenze {
         java.util.ArrayList<String[]> risultati = new java.util.ArrayList<>();
         for (Studente s : studenti) {
             risultati.add(new String[]{s.getNome(), s.getCognome(), s.getEmail_IST(), s.getMatricola()});
+        }
+        return risultati;
+    }
+
+    public List<Docente> cercaDocente(String nome) {
+        return gestorePersistenza.cercaPerCampoLike(Docente.class, "nome", nome);
+    }
+
+    public java.util.ArrayList<String[]> cercaDocenteStr(String nome) {
+        List<Docente> docenti = cercaDocente(nome);
+        java.util.ArrayList<String[]> risultati = new java.util.ArrayList<>();
+        for (Docente d : docenti) {
+            risultati.add(new String[]{d.getNome(), d.getCognome(), d.getEmail_IST(), d.getMatricola()});
         }
         return risultati;
     }

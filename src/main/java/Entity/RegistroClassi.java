@@ -129,8 +129,8 @@ public class RegistroClassi {
         return new String[] { c.getCod(), c.getNome(), docenteInfo };
     }
 
-    public ArrayList<String[]> cercaClassiPerCodiceLikeStr(String codice) {
-        List<ClasseVirtuale> classi = gestorePersistenza.cercaPerCampoLike(ClasseVirtuale.class, "cod", codice);
+    public ArrayList<String[]> cercaClassiPerNomeLikeStr(String nome) {
+        List<ClasseVirtuale> classi = gestorePersistenza.cercaPerCampoLike(ClasseVirtuale.class, "nome", nome);
         ArrayList<String[]> risultati = new ArrayList<>();
         if (classi != null) {
             for (ClasseVirtuale c : classi) {

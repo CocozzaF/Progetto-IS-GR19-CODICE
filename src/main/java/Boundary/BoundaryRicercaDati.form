@@ -24,6 +24,7 @@
           <model>
             <item value="Studente"/>
             <item value="Classe"/>
+            <item value="Docente"/>
           </model>
         </properties>
       </component>

@@ -65,22 +65,24 @@ public class BoundaryRicercaDati extends JFrame {
             cercaStudenti(criterio);
         } else if ("Classe".equals(tipoRicerca)) {
             cercaClassi(criterio);
+        } else if ("Docente".equals(tipoRicerca)) {
+            cercaDocenti(criterio);
         } else {
             ErrMessage.setText("Errore: Selezionare un tipo di ricerca valido!");
         }
     }
 
     private void cercaStudenti(String criterio) {
-        modelloTabella.setColumnIdentifiers(new String[]{"Nome", "Cognome", "Email / Matricola"});
+        modelloTabella.setColumnIdentifiers(new String[] { "Nome", "Cognome", "Email / Matricola" });
         modelloTabella.setRowCount(0);
-        
+
         try {
             GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
             List<String[]> risultati = gestore.ricercaStudente(criterio);
 
             if (risultati != null && !risultati.isEmpty()) {
                 for (String[] studente : risultati) {
-                    modelloTabella.addRow(new Object[]{studente[0], studente[1], studente[2] + " / " + studente[3]});
+                    modelloTabella.addRow(new Object[] { studente[0], studente[1], studente[2] + " / " + studente[3] });
                 }
             } else {
                 ErrMessage.setText("Nessuno studente trovato o errore nei criteri.");
@@ -91,19 +93,39 @@ public class BoundaryRicercaDati extends JFrame {
     }
 
     private void cercaClassi(String criterio) {
-        modelloTabella.setColumnIdentifiers(new String[]{"Codice Classe", "Nome Classe", "Docente"});
+        modelloTabella.setColumnIdentifiers(new String[] { "Codice Classe", "Nome Classe", "Docente" });
         modelloTabella.setRowCount(0);
-        
+
         try {
             GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
-            List<String[]> classi = gestore.ricercaClassePerCodice(criterio);
+            List<String[]> classi = gestore.ricercaClassePerNome(criterio);
 
             if (classi != null && !classi.isEmpty()) {
                 for (String[] classe : classi) {
-                    modelloTabella.addRow(new Object[]{classe[0], classe[1], classe[2]});
+                    modelloTabella.addRow(new Object[] { classe[0], classe[1], classe[2] });
                 }
             } else {
                 ErrMessage.setText("Nessuna classe trovata o errore nei criteri.");
+            }
+        } catch (Exception ex) {
+            ErrMessage.setText("Errore durante la ricerca: " + ex.getMessage());
+        }
+    }
+
+    private void cercaDocenti(String criterio) {
+        modelloTabella.setColumnIdentifiers(new String[] { "Nome", "Cognome", "Email / Matricola" });
+        modelloTabella.setRowCount(0);
+
+        try {
+            GestoreRegistroElettronico gestore = new GestoreRegistroElettronico();
+            List<String[]> risultati = gestore.ricercaDocente(criterio);
+
+            if (risultati != null && !risultati.isEmpty()) {
+                for (String[] docente : risultati) {
+                    modelloTabella.addRow(new Object[] { docente[0], docente[1], docente[2] + " / " + docente[3] });
+                }
+            } else {
+                ErrMessage.setText("Nessun docente trovato o errore nei criteri.");
             }
         } catch (Exception ex) {
             ErrMessage.setText("Errore durante la ricerca: " + ex.getMessage());

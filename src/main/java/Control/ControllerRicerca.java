@@ -19,6 +19,10 @@ public class ControllerRicerca {
         return registroUtenza.cercaStudenteStr(nome);
     }
 
+    public List<String[]> ricercaDocente(String nome) {
+        return registroUtenza.cercaDocenteStr(nome);
+    }
+
     public List<String[]> ricercaLezioni(String codiceClasse) {
         return registroClassi.getLezioniClasseStr(codiceClasse);
     }
@@ -34,8 +38,15 @@ public class ControllerRicerca {
     }
 
     public List<String[]> ricercaClassePerCodice(String codice) {
-        return registroClassi.cercaClassiPerCodiceLikeStr(codice);
+        String[] c = registroClassi.cercaClassePerCodiceStr(codice);
+        if (c == null) return new ArrayList<>();
+        List<String[]> res = new ArrayList<>();
+        res.add(c);
+        return res;
     }
 
+    public List<String[]> ricercaClassePerNome(String nome) {
+        return registroClassi.cercaClassiPerNomeLikeStr(nome);
+    }
 
 }
