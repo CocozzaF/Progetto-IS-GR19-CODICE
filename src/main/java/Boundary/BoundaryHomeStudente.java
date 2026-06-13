@@ -18,10 +18,13 @@ public class BoundaryHomeStudente extends JFrame {
     private String nomeStudente;
     private String cognomeStudente;
 
+    private BoundaryVisualizzaLezione boundaryVisualizzaLezione;
+
     public BoundaryHomeStudente(String matricolaStudente, String nomeStudente, String cognomeStudente) {
         this.matricolaStudente = matricolaStudente;
         this.nomeStudente = nomeStudente;
         this.cognomeStudente = cognomeStudente;
+        boundaryVisualizzaLezione = new BoundaryVisualizzaLezione(matricolaStudente, new GestoreRegistroElettronico(), true);
         inizializzaUI();
     }
 
@@ -59,8 +62,7 @@ public class BoundaryHomeStudente extends JFrame {
     }
 
     public void VisualizzaLezioni() {
-        BoundaryVisualizzaLezione form = new BoundaryVisualizzaLezione(matricolaStudente, new GestoreRegistroElettronico(), true);
-        form.mostraSchermata();
+        boundaryVisualizzaLezione.mostraSchermata();
     }
 
     public void IscrivitiClasse() {

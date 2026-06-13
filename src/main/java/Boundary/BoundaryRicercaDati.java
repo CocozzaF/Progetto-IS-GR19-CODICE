@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import Control.GestoreRegistroElettronico;
+import jakarta.inject.Singleton;
 
+@Singleton
 public class BoundaryRicercaDati extends JFrame {
 
     private JPanel contentPane;
@@ -25,7 +27,7 @@ public class BoundaryRicercaDati extends JFrame {
         setContentPane(contentPane);
         setTitle("Ricerca Dati - Registro Elettronico");
         setSize(600, 400);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         modelloTabella = new DefaultTableModel();

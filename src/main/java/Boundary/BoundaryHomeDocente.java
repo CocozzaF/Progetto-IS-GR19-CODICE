@@ -15,6 +15,9 @@ public class BoundaryHomeDocente extends JFrame {
     private JLabel welcomeLabel;
 
     private BoundaryRegistraLezione boundaryRegistraLezione;
+    private BoundaryAssegnaCompito boundaryAssegnaCompito;
+    private BoundaryVisualizzaLezione boundaryVisualizzaLezione;
+    private BoundaryRicercaDati boundaryRicercaDati;
     private String emailDocente;
 
     public BoundaryHomeDocente(String emailDocente, String nome, String cognome) {
@@ -32,14 +35,16 @@ public class BoundaryHomeDocente extends JFrame {
         GestoreRegistroElettronico controller = new GestoreRegistroElettronico();
 
         boundaryRegistraLezione = new BoundaryRegistraLezione(controller, emailDocente);
+        boundaryAssegnaCompito = new BoundaryAssegnaCompito(controller, emailDocente);
+        boundaryVisualizzaLezione = new BoundaryVisualizzaLezione(emailDocente, controller, false);
+        boundaryRicercaDati = new BoundaryRicercaDati();
 
         RegistraLezione.addActionListener(e ->
                 boundaryRegistraLezione.mostraSchermata()
         );
 
         AssegnaCompito.addActionListener(e -> {
-            BoundaryAssegnaCompito form = new BoundaryAssegnaCompito(controller, emailDocente);
-            form.mostraSchermata();
+            boundaryAssegnaCompito.mostraSchermata();
         });
 
         RegistraValutazione.addActionListener(e -> 
@@ -47,8 +52,7 @@ public class BoundaryHomeDocente extends JFrame {
         );
 
         VisualizzaRegistro.addActionListener(e -> {
-            BoundaryVisualizzaLezione form = new BoundaryVisualizzaLezione(emailDocente, controller, false);
-            form.mostraSchermata();
+            boundaryVisualizzaLezione.mostraSchermata();
         });
 
         MonitoraAndamento.addActionListener(e -> 
@@ -56,8 +60,7 @@ public class BoundaryHomeDocente extends JFrame {
         );
 
         RicercaDati.addActionListener(e -> {
-            BoundaryRicercaDati form = new BoundaryRicercaDati();
-            form.mostraSchermata();
+            boundaryRicercaDati.mostraSchermata();
         });
 
         Logout.addActionListener(e -> Logout());

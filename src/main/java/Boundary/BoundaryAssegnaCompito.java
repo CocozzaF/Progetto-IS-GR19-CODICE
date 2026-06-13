@@ -1,4 +1,6 @@
 package Boundary;
+import jakarta.inject.Singleton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Singleton
 public class BoundaryAssegnaCompito {
 
     private JPanel contentPane;
@@ -18,6 +21,7 @@ public class BoundaryAssegnaCompito {
     private JButton Assegna;
     private JLabel ErrMessage;
 
+    private JFrame frame;
     private Control.GestoreRegistroElettronico controller;
     private String emailDocente;
 
@@ -44,11 +48,13 @@ public class BoundaryAssegnaCompito {
     }
 
     public void mostraSchermata() {
-        JFrame frame = new JFrame("Assegna Compito");
-        frame.setContentPane(contentPane);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.pack();
+        if (frame == null) {
+            frame = new JFrame("Assegna Compito");
+            frame.setContentPane(contentPane);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
+            frame.pack();
+        }
         frame.setVisible(true);
     }
 

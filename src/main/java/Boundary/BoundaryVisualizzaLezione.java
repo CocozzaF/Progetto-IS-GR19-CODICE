@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import jakarta.inject.Singleton;
+
+@Singleton
 public class BoundaryVisualizzaLezione extends JFrame {
 
     private JComboBox<String> comboClassi;
@@ -33,7 +36,7 @@ public class BoundaryVisualizzaLezione extends JFrame {
     private void inizializzaSchermata() {
         setTitle("Visualizza Lezioni");
         setSize(700, 500);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         initComponents();
