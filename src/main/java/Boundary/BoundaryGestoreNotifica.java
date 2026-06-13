@@ -1,10 +1,12 @@
 package Boundary;
 
+import javax.swing.JOptionPane;
+
 public class BoundaryGestoreNotifica {
     
     public static void InvioDatiNotifiche(Object data) {
-        
         System.out.println("Sistema Notifiche - Invio in corso: " + data);
+        JOptionPane.showMessageDialog(null, data.toString(), "Nuova Notifica", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public static void notificaNuovaLezione(String idClasse) {
@@ -18,10 +20,13 @@ public class BoundaryGestoreNotifica {
         System.out.println(messaggio);
         InvioDatiNotifiche(messaggio);
     }
+  /*
 
     public static void notificaNuovaValutazione(String idStudente) {
         String messaggio = "NOTIFICA: È stata inserita una nuova valutazione per lo studente " + idStudente;
         System.out.println(messaggio);
         InvioDatiNotifiche(messaggio);
     }
+
+   */
 }

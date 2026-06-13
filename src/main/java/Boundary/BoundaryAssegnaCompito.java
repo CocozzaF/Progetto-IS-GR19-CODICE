@@ -108,4 +108,6 @@ public class BoundaryAssegnaCompito {
             ErrMessage.setForeground(Color.RED);
         }
     }
+
+
 }
