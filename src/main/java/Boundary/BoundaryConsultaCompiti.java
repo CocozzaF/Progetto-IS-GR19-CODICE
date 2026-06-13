@@ -12,7 +12,7 @@ import java.util.List;
 @Singleton
 public class BoundaryConsultaCompiti extends JFrame {
 
-    private JPanel topPanel;
+    private JPanel mainPanel;
     private JComboBox<String> comboClassi;
     private JTable tableCompiti;
 
@@ -33,8 +33,6 @@ public class BoundaryConsultaCompiti extends JFrame {
         this.isStudente = isStudente;
 
         inizializzaSchermata();
-        configuraEventi();
-        caricaClassi();
     }
 
     private void inizializzaSchermata() {
@@ -43,20 +41,6 @@ public class BoundaryConsultaCompiti extends JFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        initComponents();
-    }
-
-    private void initComponents() {
-        JPanel mainPanel = new JPanel(new java.awt.BorderLayout(10, 10));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-
-        topPanel = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        topPanel.add(new JLabel("Seleziona Classe: "));
-        comboClassi = new JComboBox<>();
-        comboClassi.setPreferredSize(new java.awt.Dimension(250, 30));
-        topPanel.add(comboClassi);
-        mainPanel.add(topPanel, java.awt.BorderLayout.NORTH);
-
         String[] columnNames = {"Titolo", "Descrizione", "Data Assegnazione", "Data Scadenza"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -64,19 +48,11 @@ public class BoundaryConsultaCompiti extends JFrame {
                 return false;
             }
         };
-        tableCompiti = new JTable(tableModel);
+        tableCompiti.setModel(tableModel);
         tableCompiti.setRowHeight(25);
         tableCompiti.getTableHeader().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
         tableCompiti.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        JScrollPane scrollTable = new JScrollPane(tableCompiti);
-        scrollTable.setBorder(BorderFactory.createTitledBorder("Elenco Compiti"));
-        mainPanel.add(scrollTable, java.awt.BorderLayout.CENTER);
-
-        setContentPane(mainPanel);
-    }
-
-    private void configuraEventi() {
         comboClassi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,9 +62,11 @@ public class BoundaryConsultaCompiti extends JFrame {
                 }
             }
         });
+
+        setContentPane(mainPanel);
     }
 
-    private void caricaClassi() {
+    private boolean caricaClassi() {
         if (isStudente) {
             classiDisponibili = gestore.getClassiPerStudente(matricolaStudente);
         } else {
@@ -102,8 +80,11 @@ public class BoundaryConsultaCompiti extends JFrame {
             }
 
             caricaCompiti(classiDisponibili.get(0)[0], true);
+            return true;
         } else {
-            JOptionPane.showMessageDialog(this, "Nessuna classe trovata.", "Avviso", JOptionPane.INFORMATION_MESSAGE);
+            tableModel.setRowCount(0);
+            JOptionPane.showMessageDialog(null, "Nessuna classe trovata per l'utente.", "Avviso", JOptionPane.INFORMATION_MESSAGE);
+            return false;
         }
     }
 
@@ -122,6 +103,8 @@ public class BoundaryConsultaCompiti extends JFrame {
     }
 
     public void mostraSchermata() {
-        setVisible(true);
+        if (caricaClassi()) {
+            setVisible(true);
+        }
     }
 }
