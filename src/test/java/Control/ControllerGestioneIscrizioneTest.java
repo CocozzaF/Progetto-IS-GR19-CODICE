@@ -86,7 +86,7 @@ class ControllerGestioneIscrizioneTest {
 
         // 2. Iniezione della dipendenza fittizia (Stub) nel Controller
         stubDb = new StubGestorePersistenza();
-        controller = new ControllerGestioneIscrizione(stubDb);
+        controller = new ControllerGestioneIscrizione(new Entity.RegistroClassi(stubDb));
     }
 
     /**
@@ -152,19 +152,8 @@ class ControllerGestioneIscrizioneTest {
                 "TC-3: non deve essere chiamato aggiornaOggetto() per un duplicato");
     }
 
-    /**
-     * Test diretto di verificaIscrizioneEsistente() (visibilità package).
-     * Verifica che equals()/hashCode() di Studente funzionino correttamente.
-     */
-    @Test
-    void testVerificaIscrizioneEsistente_StudentePresente() {
-        assertTrue(controller.verificaIscrizioneEsistente(classeEsistente, studenteGiaIscritto));
-    }
-
-    @Test
-    void testVerificaIscrizioneEsistente_StudenteAssente() {
-        assertFalse(controller.verificaIscrizioneEsistente(classeEsistente, studenteNonIscritto));
-    }
+    // I test diretti per verificaIscrizioneEsistente sono stati rimossi 
+    // in quanto la logica è stata spostata e usa direttamente il contains() della lista.
 
     @Test
     void testStudenteNonTrovato() {

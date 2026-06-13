@@ -169,7 +169,7 @@ public class AssegnaCompitoTest {
 
     @Test
     public void testGetCompitiClasse() {
-        List<Entity.Compito> compiti = controller.getCompitiClasse("1A");
+        List<String[]> compiti = controller.getCompitiClasse("1A");
         assertNotNull(compiti);
     }
 
@@ -180,19 +180,18 @@ public class AssegnaCompitoTest {
 
     @Test
     public void testModificaCompitiNull() {
-        boolean result = controller.modificaCompiti(null);
+        boolean result = controller.modificaCompiti(-1L, "Titolo", "Desc", new Date());
         assertFalse(result);
     }
 
     @Test
     public void testModificaCompitiValid() {
-        Entity.Compito compito = new Entity.Compito("Titolo", "Desc", new Date(), new Date());
-        assertDoesNotThrow(() -> controller.modificaCompiti(compito));
+        assertDoesNotThrow(() -> controller.modificaCompiti(1L, "Titolo", "Desc", new Date()));
     }
 
     @Test
     public void testNotificaNuovoCompito() {
         Entity.Compito compito = new Entity.Compito("Titolo", "Desc", new Date(), new Date());
-        assertDoesNotThrow(() -> controller.notificaNuovoCompito("1A", compito));
+        assertDoesNotThrow(() -> controller.notificaNuovoCompito("1A", compito.getTitolo()));
     }
 }

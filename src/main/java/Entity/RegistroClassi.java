@@ -1,6 +1,8 @@
 package Entity;
 
 import Database.GestorePersistenza;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,7 +82,7 @@ public class RegistroClassi {
     }
 
     public List<Lezione> getLezioniClasse(String codiceUnivoco) {
-        return gestorePersistenza.cercaPerCampo(Lezione.class, "classe.Cod", codiceUnivoco);
+        return gestorePersistenza.cercaPerCampo(Lezione.class, "classeVirtuale.cod", codiceUnivoco);
     }
 
     public ArrayList<String[]> getLezioniClasseStr(String codiceUnivoco) {
@@ -171,10 +173,10 @@ public class RegistroClassi {
     }
 
     public ArrayList<String[]> getClassiPerStudenteStr(String matricola) {
-        jakarta.persistence.EntityManager em = Database.JpaUtil.getInstance().getEntityManager();
+        EntityManager em = Database.JpaUtil.getInstance().getEntityManager();
         try {
             String jpql = "SELECT c FROM ClasseVirtuale c JOIN c.studenti s WHERE s.matricola = :matricola";
-            jakarta.persistence.TypedQuery<ClasseVirtuale> query = em.createQuery(jpql, ClasseVirtuale.class);
+            TypedQuery<ClasseVirtuale> query = em.createQuery(jpql, ClasseVirtuale.class);
             query.setParameter("matricola", matricola);
             List<ClasseVirtuale> classi = query.getResultList();
             

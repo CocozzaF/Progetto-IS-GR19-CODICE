@@ -40,7 +40,7 @@ public class BoundaryRegistraLezione extends JFrame {
 
         add(new JLabel("Classe:"));
 
-        classeCombo = new JComboBox<>(new String[]{"Seleziona classe...", "1A", "2B", "3C"});
+        classeCombo = new JComboBox<>();
         add(classeCombo);
 
         add(new JLabel("Data (dd-MM-yyyy):"));
