@@ -172,7 +172,7 @@ class ControllerGestioneIscrizioneTest {
     @Test
     void testMetodiStubCompagni() {
         assertFalse(controller.iscriviStudente("M001", "C001"));
-        assertNull(controller.getStudentiIscritti("C001"));
+        assertTrue(controller.getStudentiIscritti("C001").isEmpty());
         assertFalse(controller.rimuoviIscrizione("M001", "C001"));
     }
 }
