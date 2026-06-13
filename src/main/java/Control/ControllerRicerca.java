@@ -7,12 +7,12 @@ public class ControllerRicerca {
 
     private Entity.RegistroClassi registroClassi;
     private Entity.RegistroUtenze registroUtenza;
-    //private RegistroValutazioni registroValutazioni;
+    
 
     public ControllerRicerca() {
         this.registroClassi = new Entity.RegistroClassi();
         this.registroUtenza = new Entity.RegistroUtenze();
-       // this.registroValutazioni = new RegistroValutazioni();
+       
     }
 
     public List<String[]> ricercaStudente(String nome) {
@@ -22,11 +22,7 @@ public class ControllerRicerca {
     public List<String[]> ricercaLezioni(String codiceClasse) {
         return registroClassi.getLezioniClasseStr(codiceClasse);
     }
-/*
-    public List<Valutazione> ricercaValutazioni(String matricola) {
-        return registroValutazioni.getValutazioniStudente(matricola);
-    }
-*/
+
     public java.util.ArrayList<String> ricercaUtentePerEmail(String email) {
         Entity.Studente s = registroUtenza.cercaUtentePerEmail(email);
         if (s == null) return null;
@@ -37,8 +33,8 @@ public class ControllerRicerca {
         return dati;
     }
 
-    public String[] ricercaClassePerCodice(String codice) {
-        return registroClassi.cercaClassePerCodiceStr(codice);
+    public List<String[]> ricercaClassePerCodice(String codice) {
+        return registroClassi.cercaClassiPerCodiceLikeStr(codice);
     }
 
 

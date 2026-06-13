@@ -1,8 +1,6 @@
 package Entity;
 
 import Database.GestorePersistenza;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,28 +32,20 @@ public class RegistroClassi {
         classeVirtuale.aggiungiLezione(nuovaLez);
 
         boolean salvataLezione = gestorePersistenza.salva(nuovaLez);
-        if (!salvataLezione) return false;
+        if (!salvataLezione)
+            return false;
 
         try {
             gestorePersistenza.aggiorna(classeVirtuale);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
 
-
-
-
-    // metodo per testing
-
     public void salvaClasseVirtuale(ClasseVirtuale cv) {
         gestorePersistenza.salva(cv);
     }
-
-
-    // Aggiunte di Francesco
 
     public boolean assegnaCompito(String codiceUnivoco, String titolo, String descrizione, Date scadenza) {
         ClasseVirtuale classe = gestorePersistenza.trovaPerId(ClasseVirtuale.class, codiceUnivoco);
@@ -66,7 +56,6 @@ public class RegistroClassi {
                 gestorePersistenza.aggiorna(classe);
                 return true;
             } catch (Exception e) {
-                e.printStackTrace();
                 return false;
             }
         }
@@ -90,7 +79,7 @@ public class RegistroClassi {
         ArrayList<String[]> risultati = new ArrayList<>();
         if (lezioni != null) {
             for (Lezione l : lezioni) {
-                risultati.add(new String[]{l.getData().toString(), l.getArgomento(), l.getDescrizione()});
+                risultati.add(new String[] { l.getData().toString(), l.getArgomento(), l.getDescrizione() });
             }
         }
         return risultati;
@@ -109,7 +98,8 @@ public class RegistroClassi {
         ArrayList<String[]> risultati = new ArrayList<>();
         if (compiti != null) {
             for (Compito c : compiti) {
-                risultati.add(new String[]{String.valueOf(c.getId()), c.getTitolo(), c.getDesc(), c.getData_Sc().toString()});
+                risultati.add(new String[] { String.valueOf(c.getId()), c.getTitolo(), c.getDesc(),
+                        c.getData_Sc().toString() });
             }
         }
         return risultati;
@@ -121,8 +111,9 @@ public class RegistroClassi {
 
     public String[] getDettaglioCompitoStr(Long id) {
         Compito c = getDettaglioCompito(id);
-        if (c == null) return null;
-        return new String[]{String.valueOf(c.getId()), c.getTitolo(), c.getDesc(), c.getData_Sc().toString()};
+        if (c == null)
+            return null;
+        return new String[] { String.valueOf(c.getId()), c.getTitolo(), c.getDesc(), c.getData_Sc().toString() };
     }
 
     public ClasseVirtuale cercaClassePerCodice(String codice) {
@@ -131,9 +122,23 @@ public class RegistroClassi {
 
     public String[] cercaClassePerCodiceStr(String codice) {
         ClasseVirtuale c = cercaClassePerCodice(codice);
-        if (c == null) return null;
-        String docenteInfo = (c.getDocente() != null) ? c.getDocente().getNome() + " " + c.getDocente().getCognome() : "N/D";
-        return new String[]{c.getCod(), c.getNome(), docenteInfo};
+        if (c == null)
+            return null;
+        String docenteInfo = (c.getDocente() != null) ? c.getDocente().getNome() + " " + c.getDocente().getCognome()
+                : "N/D";
+        return new String[] { c.getCod(), c.getNome(), docenteInfo };
+    }
+
+    public ArrayList<String[]> cercaClassiPerCodiceLikeStr(String codice) {
+        List<ClasseVirtuale> classi = gestorePersistenza.cercaPerCampoLike(ClasseVirtuale.class, "cod", codice);
+        ArrayList<String[]> risultati = new ArrayList<>();
+        if (classi != null) {
+            for (ClasseVirtuale c : classi) {
+                String docenteInfo = (c.getDocente() != null) ? c.getDocente().getNome() + " " + c.getDocente().getCognome() : "N/D";
+                risultati.add(new String[] { c.getCod(), c.getNome(), docenteInfo });
+            }
+        }
+        return risultati;
     }
 
     public boolean aggiornaCompito(Compito compito) {
@@ -147,7 +152,8 @@ public class RegistroClassi {
 
     public boolean modificaCompito(Long id, String titolo, String descrizione, Date scadenza) {
         Compito c = getDettaglioCompito(id);
-        if (c == null) return false;
+        if (c == null)
+            return false;
         c.setTitolo(titolo);
         c.setDesc(descrizione);
         c.setData_Sc(scadenza);
@@ -159,30 +165,32 @@ public class RegistroClassi {
     }
 
     public ArrayList<String[]> getClassiPerDocenteStr(String emailDocente) {
-        Docente docente = gestorePersistenza.cercaPrimoPerCampi(Docente.class, java.util.Map.of("email_IST", emailDocente));
-        if (docente == null) return new ArrayList<>();
-        
+        Docente docente = gestorePersistenza.cercaPrimoPerCampi(Docente.class,
+                java.util.Map.of("email_IST", emailDocente));
+        if (docente == null)
+            return new ArrayList<>();
+
         List<ClasseVirtuale> classi = getClassiPerDocente(docente);
         ArrayList<String[]> risultati = new ArrayList<>();
         if (classi != null) {
             for (ClasseVirtuale c : classi) {
-                risultati.add(new String[]{c.getCod(), c.getNome()});
+                risultati.add(new String[] { c.getCod(), c.getNome() });
             }
         }
         return risultati;
     }
 
     public ArrayList<String[]> getClassiPerStudenteStr(String matricola) {
-        EntityManager em = Database.JpaUtil.getInstance().getEntityManager();
+        jakarta.persistence.EntityManager em = Database.JpaUtil.getInstance().getEntityManager();
         try {
             String jpql = "SELECT c FROM ClasseVirtuale c JOIN c.studenti s WHERE s.matricola = :matricola";
-            TypedQuery<ClasseVirtuale> query = em.createQuery(jpql, ClasseVirtuale.class);
+            jakarta.persistence.TypedQuery<ClasseVirtuale> query = em.createQuery(jpql, ClasseVirtuale.class);
             query.setParameter("matricola", matricola);
             List<ClasseVirtuale> classi = query.getResultList();
-            
+
             ArrayList<String[]> risultati = new ArrayList<>();
             for (ClasseVirtuale c : classi) {
-                risultati.add(new String[]{c.getCod(), c.getNome()});
+                risultati.add(new String[] { c.getCod(), c.getNome() });
             }
             return risultati;
         } finally {

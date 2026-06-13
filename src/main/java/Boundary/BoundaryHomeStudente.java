@@ -31,8 +31,8 @@ public class BoundaryHomeStudente extends JFrame {
         setSize(500, 400);
         setLocationRelativeTo(null);
 
-        // Quando si usa il GUI Designer (.form), i componenti vengono inizializzati
-        // automaticamente. Dobbiamo solo impostare il pannello principale.
+        
+        
         setContentPane(mainPanel);
 
         Benvenuto.setText("Benvenuto, " + nomeStudente + " " + cognomeStudente);
@@ -49,12 +49,12 @@ public class BoundaryHomeStudente extends JFrame {
     }
 
     public void VisualizzaVoti() {
-        // Da implementare
+        
         JOptionPane.showMessageDialog(mainPanel, "Funzionalita in sviluppo");
     }
 
     public void ConsultaCompiti() {
-        // Da implementare
+        
         JOptionPane.showMessageDialog(mainPanel, "Funzionalita in sviluppo");
     }
 

@@ -3,9 +3,7 @@ package Entity;
 import Database.GestorePersistenza;
 import java.util.List;
 
-/**
- * Intero codice preso da Giovanni
- */
+
 public class RegistroUtenze {
 
     private GestorePersistenza gestorePersistenza;
@@ -32,14 +30,14 @@ public class RegistroUtenze {
         
         java.util.ArrayList<String> dati = new java.util.ArrayList<>();
         if (u instanceof Studente) {
-            dati.add("Studente");      // Indice 0: Ruolo
-            dati.add(((Studente) u).getMatricola()); // Indice 1: Matricola
+            dati.add("Studente");      
+            dati.add(((Studente) u).getMatricola()); 
         } else if (u instanceof Docente) {
             dati.add("Docente");
-            dati.add(u.getEmail_IST()); // Indice 1: Email
+            dati.add(u.getEmail_IST()); 
         }
-        dati.add(u.getNome());         // Indice 2: Nome
-        dati.add(u.getCognome());      // Indice 3: Cognome
+        dati.add(u.getNome());         
+        dati.add(u.getCognome());      
         return dati;
     }
 
@@ -88,7 +86,7 @@ public class RegistroUtenze {
     }
 
     public List<Studente> cercaStudente(String nome) {
-        return gestorePersistenza.cercaPerCampo(Studente.class, "nome", nome);
+        return gestorePersistenza.cercaPerCampoLike(Studente.class, "nome", nome);
     }
 
     public java.util.ArrayList<String[]> cercaStudenteStr(String nome) {

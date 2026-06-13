@@ -47,6 +47,7 @@ public class BoundaryAssegnaCompito {
         JFrame frame = new JFrame("Assegna Compito");
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
     }

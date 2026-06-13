@@ -3,10 +3,7 @@ package Entity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-/**
- * Layer: Entity (Domain Model)
- * GRASP: Information Expert (Lezione gestisce i propri dati)
- */
+
 @Entity
 @Table(name = "lezione")
 public class Lezione {

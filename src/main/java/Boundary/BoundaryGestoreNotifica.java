@@ -3,7 +3,7 @@ package Boundary;
 public class BoundaryGestoreNotifica {
     
     public static void InvioDatiNotifiche(Object data) {
-        // Logica generica per l'invio
+        
         System.out.println("Sistema Notifiche - Invio in corso: " + data);
     }
     

@@ -30,7 +30,7 @@ public class BoundaryAccesso extends JFrame {
 
         setContentPane(mainPanel);
 
-        // Listeners
+        
         Access.addActionListener(e -> Accedi());
         Register.addActionListener(e -> NonRegistrato());
     }
