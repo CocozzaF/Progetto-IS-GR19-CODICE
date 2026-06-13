@@ -51,10 +51,9 @@ public class BoundaryVisualizzaStudenti extends JFrame {
         });
 
         setContentPane(mainPanel);
-        caricaClassi();
     }
 
-    private void caricaClassi() {
+    private boolean caricaClassi() {
         classiDisponibili = gestore.getClassiPerDocente(emailDocente);
 
         comboClassi.removeAllItems();
@@ -63,8 +62,11 @@ public class BoundaryVisualizzaStudenti extends JFrame {
                 comboClassi.addItem(cv[1] + " (" + cv[0] + ")");
             }
             caricaStudenti(classiDisponibili.get(0)[0]);
+            return true;
         } else {
-            JOptionPane.showMessageDialog(this, "Nessuna classe trovata per il docente.", "Avviso", JOptionPane.INFORMATION_MESSAGE);
+            tableModel.setRowCount(0);
+            JOptionPane.showMessageDialog(null, "Nessuna classe trovata per il docente.", "Avviso", JOptionPane.INFORMATION_MESSAGE);
+            return false;
         }
     }
 
@@ -80,6 +82,8 @@ public class BoundaryVisualizzaStudenti extends JFrame {
     }
 
     public void mostraSchermata() {
-        setVisible(true);
+        if (caricaClassi()) {
+            setVisible(true);
+        }
     }
 }

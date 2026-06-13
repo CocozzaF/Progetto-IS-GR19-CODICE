@@ -59,16 +59,6 @@ public class BoundaryRegistraLezione extends JFrame {
         errMessageLabel.setForeground(Color.RED);
         add(errMessageLabel);
 
-        classeCombo.addItem("Seleziona classe...");
-        if (emailDocente != null) {
-            List<String[]> classi = controller.getClassiPerDocente(emailDocente);
-            if (classi != null) {
-                for (String[] cv : classi) {
-                    classeCombo.addItem(cv[0]);
-                }
-            }
-        }
-
         registraLezBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -79,8 +69,30 @@ public class BoundaryRegistraLezione extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    private boolean caricaClassi() {
+        classeCombo.removeAllItems();
+        classeCombo.addItem("Seleziona classe...");
+        boolean hasClasses = false;
+        if (emailDocente != null) {
+            List<String[]> classi = controller.getClassiPerDocente(emailDocente);
+            if (classi != null && !classi.isEmpty()) {
+                hasClasses = true;
+                for (String[] cv : classi) {
+                    classeCombo.addItem(cv[0]);
+                }
+            }
+        }
+        if (!hasClasses) {
+            JOptionPane.showMessageDialog(null, "Nessuna classe trovata per il docente.", "Avviso", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
     public void mostraSchermata() {
-        setVisible(true);
+        if (caricaClassi()) {
+            setVisible(true);
+        }
     }
 
     public void Registra() {

@@ -28,16 +28,6 @@ public class BoundaryAssegnaCompito {
         this.controller = controller;
         this.emailDocente = emailDocente;
 
-        classeCombo.addItem("Seleziona classe...");
-        if (emailDocente != null) {
-            List<String[]> classi = controller.getClassiPerDocente(emailDocente);
-            if (classi != null) {
-                for (String[] cv : classi) {
-                    classeCombo.addItem(cv[0]);
-                }
-            }
-        }
-
         Assegna.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,7 +36,30 @@ public class BoundaryAssegnaCompito {
         });
     }
 
+    private boolean caricaClassi() {
+        classeCombo.removeAllItems();
+        classeCombo.addItem("Seleziona classe...");
+        boolean hasClasses = false;
+        if (emailDocente != null) {
+            List<String[]> classi = controller.getClassiPerDocente(emailDocente);
+            if (classi != null && !classi.isEmpty()) {
+                hasClasses = true;
+                for (String[] cv : classi) {
+                    classeCombo.addItem(cv[0]);
+                }
+            }
+        }
+        if (!hasClasses) {
+            JOptionPane.showMessageDialog(null, "Nessuna classe trovata per il docente.", "Avviso", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
     public void mostraSchermata() {
+        if (!caricaClassi()) {
+            return;
+        }
         if (frame == null) {
             frame = new JFrame("Assegna Compito");
             frame.setContentPane(contentPane);
