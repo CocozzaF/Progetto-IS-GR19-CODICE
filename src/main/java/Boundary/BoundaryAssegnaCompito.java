@@ -17,7 +17,6 @@ public class BoundaryAssegnaCompito {
     private JTextField Titolo;
     private JTextField Desc;
     private JTextField Scadenza;
-    private JButton AllegaFile;
     private JButton Assegna;
     private JLabel ErrMessage;
 
@@ -54,6 +53,7 @@ public class BoundaryAssegnaCompito {
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.pack();
+            frame.setSize(400, 300);
         }
         frame.setVisible(true);
     }
@@ -70,17 +70,27 @@ public class BoundaryAssegnaCompito {
             return;
         }
 
+        if (titolo.isEmpty()) {
+            ErrMessage.setText("Errore: Inserire un titolo!");
+            ErrMessage.setForeground(Color.RED);
+            return;
+        }
+
+        if (dataString.isEmpty()) {
+            ErrMessage.setText("Errore: Inserire una data di scadenza!");
+            ErrMessage.setForeground(Color.RED);
+            return;
+        }
+
         Date dataScadenza = null;
-        if (!dataString.isEmpty()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            sdf.setLenient(false);
-            try {
-                dataScadenza = sdf.parse(dataString);
-            } catch (Exception ex) {
-                ErrMessage.setText("Formato data errato!");
-                ErrMessage.setForeground(Color.RED);
-                return;
-            }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+        try {
+            dataScadenza = sdf.parse(dataString);
+        } catch (Exception ex) {
+            ErrMessage.setText("Errore: Formato data errato!");
+            ErrMessage.setForeground(Color.RED);
+            return;
         }
 
         boolean esito = controller.assegnaCompito(idClasse, titolo, descrizione, dataScadenza);
