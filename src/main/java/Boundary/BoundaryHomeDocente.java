@@ -11,6 +11,7 @@ public class BoundaryHomeDocente extends JFrame {
     private JButton VisualizzaRegistro;
     private JButton VisualizzaStudenti;
     private JButton RicercaDati;
+    private JButton ConsultaCompiti;
     private JButton Logout;
     private JLabel welcomeLabel;
 
@@ -19,6 +20,7 @@ public class BoundaryHomeDocente extends JFrame {
     private BoundaryVisualizzaLezione boundaryVisualizzaLezione;
     private BoundaryRicercaDati boundaryRicercaDati;
     private BoundaryVisualizzaStudenti boundaryVisualizzaStudenti;
+    private BoundaryConsultaCompiti boundaryConsultaCompiti;
     private String emailDocente;
 
     public BoundaryHomeDocente(String emailDocente, String nome, String cognome) {
@@ -40,6 +42,7 @@ public class BoundaryHomeDocente extends JFrame {
         boundaryVisualizzaLezione = new BoundaryVisualizzaLezione(emailDocente, controller, false);
         boundaryRicercaDati = new BoundaryRicercaDati();
         boundaryVisualizzaStudenti = new BoundaryVisualizzaStudenti(emailDocente, controller);
+        boundaryConsultaCompiti = new BoundaryConsultaCompiti(emailDocente, controller, false);
 
         RegistraLezione.addActionListener(e ->
                 boundaryRegistraLezione.mostraSchermata()
@@ -63,6 +66,10 @@ public class BoundaryHomeDocente extends JFrame {
 
         RicercaDati.addActionListener(e -> {
             boundaryRicercaDati.mostraSchermata();
+        });
+
+        ConsultaCompiti.addActionListener(e -> {
+            boundaryConsultaCompiti.mostraSchermata();
         });
 
         Logout.addActionListener(e -> Logout());

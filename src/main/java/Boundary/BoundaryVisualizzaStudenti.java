@@ -1,6 +1,8 @@
 package Boundary;
 
 import Control.GestoreRegistroElettronico;
+import jakarta.inject.Singleton;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -8,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+@Singleton
 public class BoundaryVisualizzaStudenti extends JFrame {
 
     private JPanel mainPanel;
