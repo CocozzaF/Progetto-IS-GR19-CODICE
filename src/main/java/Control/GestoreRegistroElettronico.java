@@ -62,6 +62,10 @@ public class GestoreRegistroElettronico {
         return iscrizioneCtrl.getUltimoErrore();
     }
 
+    public java.util.List<String[]> getStudentiIscritti(String idClasse) {
+        return iscrizioneCtrl.getStudentiIscritti(idClasse);
+    }
+
     public java.util.ArrayList<String> accedi(String email, String pwd) {
         return utenzaCtrl.accedi(email, pwd);
     }

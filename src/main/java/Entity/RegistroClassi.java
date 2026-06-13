@@ -129,6 +129,17 @@ public class RegistroClassi {
         return new String[] { c.getCod(), c.getNome(), docenteInfo };
     }
 
+    public ArrayList<String[]> getStudentiIscrittiStr(String codiceUnivoco) {
+        ClasseVirtuale cv = cercaClassePerCodice(codiceUnivoco);
+        ArrayList<String[]> risultati = new ArrayList<>();
+        if (cv != null && cv.getStudenti() != null) {
+            for (Studente s : cv.getStudenti()) {
+                risultati.add(new String[]{s.getMatricola(), s.getNome(), s.getCognome(), s.getEmail_IST()});
+            }
+        }
+        return risultati;
+    }
+
     public ArrayList<String[]> cercaClassiPerNomeLikeStr(String nome) {
         List<ClasseVirtuale> classi = gestorePersistenza.cercaPerCampoLike(ClasseVirtuale.class, "nome", nome);
         ArrayList<String[]> risultati = new ArrayList<>();

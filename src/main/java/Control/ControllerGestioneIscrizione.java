@@ -47,7 +47,7 @@ public class ControllerGestioneIscrizione {
     
 
     public java.util.List<String[]> getStudentiIscritti(String idClasse) {
-        return null;
+        return registroClassi.getStudentiIscrittiStr(idClasse);
     }
 
     public boolean rimuoviIscrizione(String idStudente, String idClasse) {

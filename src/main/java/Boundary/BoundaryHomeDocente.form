@@ -49,12 +49,12 @@
           <text value="Visualizza Registro"/>
         </properties>
       </component>
-      <component id="f5g6h" class="javax.swing.JButton" binding="MonitoraAndamento">
+      <component id="f5g6h" class="javax.swing.JButton" binding="VisualizzaStudenti">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Monitora Andamento"/>
+          <text value="Visualizza Studenti"/>
         </properties>
       </component>
       <component id="g6h7i" class="javax.swing.JButton" binding="RicercaDati">
