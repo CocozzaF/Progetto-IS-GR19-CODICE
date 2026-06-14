@@ -19,19 +19,10 @@ public class BoundaryIscrizioneAutonoma extends JFrame {
     private GestoreRegistroElettronico ctrl;
     private String matricolaStudente;
 
-    private static BoundaryIscrizioneAutonoma instance;
-
-    private BoundaryIscrizioneAutonoma(String matricolaStudente) {
+    public BoundaryIscrizioneAutonoma(String matricolaStudente) {
         this.matricolaStudente = matricolaStudente;
         this.ctrl = new GestoreRegistroElettronico();
         inizializzaUI();
-    }
-
-    public static BoundaryIscrizioneAutonoma getInstance(String matricolaStudente) {
-        if (instance == null || !instance.isDisplayable()) {
-            instance = new BoundaryIscrizioneAutonoma(matricolaStudente);
-        }
-        return instance;
     }
 
     private void inizializzaUI() {

@@ -2,9 +2,9 @@ package Boundary;
 
 import Control.GestoreRegistroElettronico;
 import jakarta.inject.Singleton;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -50,7 +50,7 @@ public class BoundaryConsultaCompiti extends JFrame {
         };
         tableCompiti.setModel(tableModel);
         tableCompiti.setRowHeight(25);
-        tableCompiti.getTableHeader().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
+        tableCompiti.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
         tableCompiti.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         comboClassi.addActionListener(new ActionListener() {

@@ -12,22 +12,19 @@ public class Docente extends Utente {
 
     
 
-    public Docente() {
-        super();
-    }
+    public Docente() {}
 
     public Docente(String matricola, String nome, String cognome, String email_IST, String password) {
         super(nome, cognome, email_IST, password);
         this.matricola = matricola;
     }
 
-    
-
     public String getMatricola() {
         return matricola;
     }
 
     public void setMatricola(String matricola) {
+
         this.matricola = matricola;
     }
 }

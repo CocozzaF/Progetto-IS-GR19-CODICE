@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class ControllerGestioneCompiti {
 
-    private Entity.RegistroClassi registroClassi;
+    private RegistroClassi registroClassi;
 
     public ControllerGestioneCompiti() {
-        this.registroClassi = new Entity.RegistroClassi();
+        this.registroClassi = new RegistroClassi();
     }
 
     public boolean assegnaCompito(String codiceUnivoco, String titolo, String descrizione, Date scadenza) {

@@ -1,17 +1,20 @@
 package Control;
 
+import Entity.RegistroClassi;
+import Entity.RegistroUtenze;
+
 import java.util.List;
 import java.util.ArrayList;
 
 public class ControllerRicerca {
 
-    private Entity.RegistroClassi registroClassi;
-    private Entity.RegistroUtenze registroUtenza;
+    private RegistroClassi registroClassi;
+    private RegistroUtenze registroUtenza;
     
 
     public ControllerRicerca() {
-        this.registroClassi = new Entity.RegistroClassi();
-        this.registroUtenza = new Entity.RegistroUtenze();
+        this.registroClassi = new RegistroClassi();
+        this.registroUtenza = new RegistroUtenze();
        
     }
 
@@ -27,10 +30,10 @@ public class ControllerRicerca {
         return registroClassi.getLezioniClasseStr(codiceClasse);
     }
 
-    public java.util.ArrayList<String> ricercaUtentePerEmail(String email) {
+    public ArrayList<String> ricercaUtentePerEmail(String email) {
         Entity.Studente s = registroUtenza.cercaUtentePerEmail(email);
         if (s == null) return null;
-        java.util.ArrayList<String> dati = new java.util.ArrayList<>();
+        ArrayList<String> dati = new ArrayList<>();
         dati.add(s.getNome());
         dati.add(s.getCognome());
         dati.add(s.getMatricola());
@@ -46,6 +49,7 @@ public class ControllerRicerca {
     }
 
     public List<String[]> ricercaClassePerNome(String nome) {
+
         return registroClassi.cercaClassiPerNomeLikeStr(nome);
     }
 

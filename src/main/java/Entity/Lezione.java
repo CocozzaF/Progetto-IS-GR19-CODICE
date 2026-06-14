@@ -35,26 +35,32 @@ public class Lezione {
     }
 
     public Long getId() {
+
         return id;
     }
     
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public LocalDate getData() {
+
         return data;
     }
 
     public void setData(LocalDate data) {
+
         this.data = data;
     }
 
     public String getArgomento() {
+
         return argomento;
     }
 
     public void setArgomento(String argomento) {
+
         this.argomento = argomento;
     }
 
@@ -63,14 +69,17 @@ public class Lezione {
     }
 
     public void setDescrizione(String descrizione) {
+
         this.descrizione = descrizione;
     }
 
     public ClasseVirtuale getClasseVirtuale() {
+
         return classeVirtuale;
     }
 
     public void setClasseVirtuale(ClasseVirtuale classeVirtuale) {
+
         this.classeVirtuale = classeVirtuale;
     }
 

@@ -3,33 +3,36 @@ package Control;
 import Database.GestorePersistenza;
 import java.util.ArrayList;
 import Boundary.BoundaryGestoreNotifica;
+import Entity.RegistroClassi;
+import java.time.LocalDate;
+import java.util.List;
 
 
 public class ControllerGestioneLezione {
 
-    private Entity.RegistroClassi registroClassi;
-    private Database.GestorePersistenza gestorePersistenza;
+    private RegistroClassi registroClassi;
+    private GestorePersistenza gestorePersistenza;
 
     public ControllerGestioneLezione() {
-        this.registroClassi = new Entity.RegistroClassi();
-        this.gestorePersistenza = new Database.GestorePersistenza();
+        this.registroClassi = new RegistroClassi();
+        this.gestorePersistenza = new GestorePersistenza();
     }
 
-    public ControllerGestioneLezione(Entity.RegistroClassi registroClassi) {
+    public ControllerGestioneLezione(RegistroClassi registroClassi) {
         this.registroClassi = registroClassi;
-        this.gestorePersistenza = new Database.GestorePersistenza();
+        this.gestorePersistenza = new GestorePersistenza();
     }
     
-    public ControllerGestioneLezione(Entity.RegistroClassi registroClassi, Database.GestorePersistenza gestorePersistenza) {
+    public ControllerGestioneLezione(RegistroClassi registroClassi, GestorePersistenza gestorePersistenza) {
         this.registroClassi = registroClassi;
         this.gestorePersistenza = gestorePersistenza;
     }
 
-    public boolean registraLezione(String idClasse, java.time.LocalDate data, String argomento, String descrizione) {
+    public boolean registraLezione(String idClasse, LocalDate data, String argomento, String descrizione) {
         if (argomento == null || argomento.trim().isEmpty()) {
             return false;
         }
-        if (data == null || data.isAfter(java.time.LocalDate.now())) {
+        if (data == null || data.isAfter(LocalDate.now())) {
             return false;
         }
 
@@ -41,15 +44,15 @@ public class ControllerGestioneLezione {
     }
 
 
-    public java.util.List<String[]> getClassiPerDocente(String emailDocente) {
+    public List<String[]> getClassiPerDocente(String emailDocente) {
         return registroClassi.getClassiPerDocenteStr(emailDocente);
     }
 
-    public java.util.List<String[]> getClassiPerStudente(String matricola) {
+    public List<String[]> getClassiPerStudente(String matricola) {
         return registroClassi.getClassiPerStudenteStr(matricola);
     }
 
-    public java.util.List<String[]> getLezioniPerClasse(String codiceClasse) {
+    public List<String[]> getLezioniPerClasse(String codiceClasse) {
         return registroClassi.getLezioniClasseStr(codiceClasse);
     }
 }

@@ -2,27 +2,31 @@ package Entity;
 
 import Database.GestorePersistenza;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class RegistroClassi {
 
     private GestorePersistenza gestorePersistenza;
 
     public RegistroClassi() {
+
         this.gestorePersistenza = new GestorePersistenza();
     }
 
     public RegistroClassi(GestorePersistenza gestorePersistenza) {
+
         this.gestorePersistenza = gestorePersistenza;
     }
 
     public ClasseVirtuale getClasseVirtuale(String idClasse) {
-        return gestorePersistenza.cercaPrimoPerCampi(ClasseVirtuale.class, java.util.Map.of("cod", idClasse));
+        return gestorePersistenza.cercaPrimoPerCampi(ClasseVirtuale.class, Map.of("cod", idClasse));
     }
 
-    public boolean registraLezione(String idClasse, java.time.LocalDate data, String argomento, String descrizione) {
+    public boolean registraLezione(String idClasse, LocalDate data, String argomento, String descrizione) {
         ClasseVirtuale classeVirtuale = getClasseVirtuale(idClasse);
         if (classeVirtuale == null) {
             return false;
@@ -44,6 +48,7 @@ public class RegistroClassi {
     }
 
     public void salvaClasseVirtuale(ClasseVirtuale cv) {
+
         gestorePersistenza.salva(cv);
     }
 
@@ -111,6 +116,7 @@ public class RegistroClassi {
     }
 
     public Compito getDettaglioCompito(Long id) {
+
         return gestorePersistenza.trovaPerId(Compito.class, id);
     }
 

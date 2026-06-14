@@ -1,7 +1,6 @@
 package Entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +25,9 @@ public class ClasseVirtuale {
     @OneToMany(mappedBy = "classeVirtuale", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lezione> lezioni = new ArrayList<>();
 
-    
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "codice_univoco")
     private List<Compito> compitiAssegnati;
-
-    
-
-
-
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -43,8 +35,6 @@ public class ClasseVirtuale {
             joinColumns = @JoinColumn(name = "codice_classe"),
             inverseJoinColumns = @JoinColumn(name = "studente_email")
     )
-
-
 
     private List<Studente> studenti = new ArrayList<>();
 
@@ -59,12 +49,21 @@ public class ClasseVirtuale {
         this.studenti = new ArrayList<>();
     }
 
-    public String getCod() { return cod; }
-    public void setCod(String cod) { this.cod = cod; }
+    public String getCod() {
+        return cod;
+    }
 
-    public List<Lezione> getLezioni() { return lezioni; }
+    public void setCod(String cod) {
+        this.cod = cod;
+    }
+
+    public List<Lezione> getLezioni() {
+        return lezioni;
+    }
     
-    public void setLezioni(List<Lezione> lezioni) { this.lezioni = lezioni; }
+    public void setLezioni(List<Lezione> lezioni) {
+        this.lezioni = lezioni;
+    }
 
     public void aggiungiLezione(Lezione lezione) {
         lezioni.add(lezione);
@@ -76,16 +75,31 @@ public class ClasseVirtuale {
         lezione.setClasseVirtuale(null);
     }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public String getNome() {
+        return nome;
+    }
 
-    public Docente getDocente() { return docente; }
-    public void setDocente(Docente docente) { this.docente = docente; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Docente getDocente() {
+        return docente;
+    }
+
+    public void setDocente(Docente docente) {
+        this.docente = docente;
+    }
 
     
 
-    public List<Compito> getCompitiAssegnati() { return compitiAssegnati; }
-    public void setCompitiAssegnati(List<Compito> compitiAssegnati) { this.compitiAssegnati = compitiAssegnati; }
+    public List<Compito> getCompitiAssegnati() {
+        return compitiAssegnati;
+    }
+
+    public void setCompitiAssegnati(List<Compito> compitiAssegnati) {
+        this.compitiAssegnati = compitiAssegnati;
+    }
 
     public Compito creaCompito(String Titolo, String Desc, Date Data_As, Date Data_Sc) {
         Compito nuovoCompito = new Compito(Titolo, Desc, Data_As, Data_Sc);
@@ -101,12 +115,17 @@ public class ClasseVirtuale {
 
     
 
-    public List<Studente> getStudenti() { return studenti; }
-    public void setStudenti(List<Studente> studenti) { this.studenti = studenti; }
+    public List<Studente> getStudenti() {
+        return studenti;
+    }
+    public void setStudenti(List<Studente> studenti) {
+        this.studenti = studenti;
+    }
 
 
     @Override
     public String toString() {
+
         return "ClasseVirtuale{cod='" + cod + "', nome='" + nome + "'}";
     }
 }

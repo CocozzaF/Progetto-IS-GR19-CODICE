@@ -5,18 +5,18 @@ import Entity.RegistroClassi;
 
 public class ControllerGestioneIscrizione {
 
-    private Entity.RegistroClassi registroClassi;
+    private RegistroClassi registroClassi;
 
     
     private String ultimoErrore;
 
     
     public ControllerGestioneIscrizione() {
-        this.registroClassi = new Entity.RegistroClassi();
+        this.registroClassi = new RegistroClassi();
     }
 
     
-    ControllerGestioneIscrizione(Entity.RegistroClassi registroClassi) {
+    ControllerGestioneIscrizione(RegistroClassi registroClassi) {
         this.registroClassi = registroClassi;
     }
 
@@ -33,12 +33,6 @@ public class ControllerGestioneIscrizione {
         return success;
     }
 
-
-
-
-
-
-    
 
     boolean iscriviStudente(String matricolaStudente, String idClasse) {
         return false;

@@ -22,8 +22,7 @@ public abstract class Utente {
 
     
 
-    public Utente() {
-    }
+    public Utente() {}
 
     public Utente(String nome, String cognome, String email_IST, String password) {
         this.nome = nome;
@@ -35,34 +34,42 @@ public abstract class Utente {
     
 
     public String getNome() {
+
         return nome;
     }
 
     public void setNome(String nome) {
+
         this.nome = nome;
     }
 
     public String getCognome() {
+
         return cognome;
     }
 
     public void setCognome(String cognome) {
+
         this.cognome = cognome;
     }
 
     public String getEmail_IST() {
+
         return email_IST;
     }
 
     public void setEmail_IST(String email_IST) {
+
         this.email_IST = email_IST;
     }
 
     public String getPassword() {
+
         return password;
     }
 
     public void setPassword(String password) {
+
         this.password = password;
     }
 

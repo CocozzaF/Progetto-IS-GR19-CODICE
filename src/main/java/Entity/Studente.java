@@ -23,8 +23,12 @@ public class Studente extends Utente {
         this.matricola = matricola;
     }
 
-    public String getMatricola() { return matricola; }
-    public void setMatricola(String matricola) { this.matricola = matricola; }
+    public String getMatricola() {
+        return matricola;
+    }
+    public void setMatricola(String matricola) {
+        this.matricola = matricola;
+    }
 
     public Studente(String nome, String cognome, String emailIstituzionale, String password) {
         super(nome, cognome, emailIstituzionale, password);
@@ -39,10 +43,13 @@ public class Studente extends Utente {
     }
 
     @Override
-    public int hashCode() { return Objects.hash(getMatricola()); }
+    public int hashCode() {
+        return Objects.hash(getMatricola());
+    }
 
     @Override
     public String toString() {
+
         return "Studente{matricola='" + getMatricola() + "', nome='" + getNome() + "'}";
     }
 }

@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import jakarta.inject.Singleton;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 @Singleton
 public class BoundaryRegistraLezione extends JFrame {
@@ -111,15 +114,15 @@ public class BoundaryRegistraLezione extends JFrame {
             return;
         }
 
-        java.time.LocalDate parsedDate;
+        LocalDate parsedDate;
         try {
-            java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            parsedDate = java.time.LocalDate.parse(data, formatter);
-            if (parsedDate.isAfter(java.time.LocalDate.now())) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            parsedDate = LocalDate.parse(data, formatter);
+            if (parsedDate.isAfter(LocalDate.now())) {
                 errMessageLabel.setText("Data non valida (futuro)!");
                 return;
             }
-        } catch (java.time.format.DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             errMessageLabel.setText("Data non valida!");
             return;
         }

@@ -48,7 +48,7 @@ public class BoundaryAccesso extends JFrame {
             return;
         }
 
-        java.util.ArrayList<String> datiLoggato = ctrl.accedi(email, pwd);
+        ArrayList<String> datiLoggato = ctrl.accedi(email, pwd);
 
         if (datiLoggato == null) {
             lblErrMessage.setText("Credenziali non valide!");

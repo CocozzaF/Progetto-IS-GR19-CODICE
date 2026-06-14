@@ -35,9 +35,6 @@ public class BoundaryHomeStudente extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 400);
         setLocationRelativeTo(null);
-
-        
-        
         setContentPane(mainPanel);
 
         Benvenuto.setText("Benvenuto, " + nomeStudente + " " + cognomeStudente);
@@ -67,7 +64,7 @@ public class BoundaryHomeStudente extends JFrame {
     }
 
     public void IscrivitiClasse() {
-        BoundaryIscrizioneAutonoma form = BoundaryIscrizioneAutonoma.getInstance(matricolaStudente);
+        BoundaryIscrizioneAutonoma form = new BoundaryIscrizioneAutonoma(matricolaStudente);
         form.mostraSchermata();
     }
 

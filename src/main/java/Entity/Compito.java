@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "compito")
-@SuppressWarnings("JpaDataSourceORMInspection")
+
 public class Compito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,20 +36,41 @@ public class Compito {
         
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getTitolo() { return Titolo; }
-    public void setTitolo(String Titolo) { this.Titolo = Titolo; }
+    public String getTitolo() {
+        return Titolo;
+    }
+    public void setTitolo(String Titolo) {
+        this.Titolo = Titolo;
+    }
 
-    public String getDesc() { return Desc; }
-    public void setDesc(String Desc) { this.Desc = Desc; }
+    public String getDesc() {
+        return Desc;
+    }
+    public void setDesc(String Desc) {
+        this.Desc = Desc;
+    }
 
-    public Date getData_As() { return Data_As; }
-    public void setData_As(Date Data_As) { this.Data_As = Data_As; }
+    public Date getData_As() {
+        return Data_As;
+    }
+    public void setData_As(Date Data_As) {
+        this.Data_As = Data_As;
+    }
 
-    public Date getData_Sc() { return Data_Sc; }
-    public void setData_Sc(Date Data_Sc) { this.Data_Sc = Data_Sc; }
+
+    public Date getData_Sc() {
+        return Data_Sc;
+    }
+    public void setData_Sc(Date Data_Sc) {
+        this.Data_Sc = Data_Sc;
+    }
 
     
 }

@@ -1,20 +1,24 @@
 package Entity;
 
 import Database.GestorePersistenza;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RegistroUtenze {
 
     private GestorePersistenza gestorePersistenza;
 
     public RegistroUtenze() {
+
         this.gestorePersistenza = new GestorePersistenza();
     }
 
     public Utente verificaCredenziali(String email, String pass) {
         List<Utente> risultati = gestorePersistenza.cercaPerCampi(
                 Utente.class,
-                java.util.Map.of("email_IST", email, "password", pass)
+                Map.of("email_IST", email, "password", pass)
         );
 
         if (!risultati.isEmpty()) {
@@ -23,11 +27,11 @@ public class RegistroUtenze {
         return null;
     }
 
-    public java.util.ArrayList<String> verificaCredenzialiStr(String email, String pass) {
+    public ArrayList<String> verificaCredenzialiStr(String email, String pass) {
         Utente u = verificaCredenziali(email, pass);
         if (u == null) return null;
         
-        java.util.ArrayList<String> dati = new java.util.ArrayList<>();
+       ArrayList<String> dati = new ArrayList<>();
         if (u instanceof Studente) {
             dati.add("Studente");      
             dati.add(((Studente) u).getMatricola()); 
@@ -51,17 +55,17 @@ public class RegistroUtenze {
 
     public String generaNuovaMatricola(String ruolo) {
         String prefix = ruolo.equalsIgnoreCase("studente") ? "S" : "D";
-        List<String> matricoleEsistenti = new java.util.ArrayList<>();
+        List<String> matricoleEsistenti = new ArrayList<>();
         if (ruolo.equalsIgnoreCase("studente")) {
-            List<Entity.Studente> studenti = gestorePersistenza.cercaPerCampi(Entity.Studente.class, java.util.Map.of());
-            for (Entity.Studente s : studenti) {
+            List<Studente> studenti = gestorePersistenza.cercaPerCampi(Studente.class, Map.of());
+            for (Studente s : studenti) {
                 if (s.getMatricola() != null && s.getMatricola().startsWith(prefix)) {
                     matricoleEsistenti.add(s.getMatricola());
                 }
             }
         } else if (ruolo.equalsIgnoreCase("docente")) {
-            List<Entity.Docente> docenti = gestorePersistenza.cercaPerCampi(Entity.Docente.class, java.util.Map.of());
-            for (Entity.Docente d : docenti) {
+            List<Docente> docenti = gestorePersistenza.cercaPerCampi(Docente.class, Map.of());
+            for (Docente d : docenti) {
                 if (d.getMatricola() != null && d.getMatricola().startsWith(prefix)) {
                     matricoleEsistenti.add(d.getMatricola());
                 }
@@ -88,9 +92,9 @@ public class RegistroUtenze {
         return gestorePersistenza.cercaPerCampoLike(Studente.class, "nome", nome);
     }
 
-    public java.util.ArrayList<String[]> cercaStudenteStr(String nome) {
+    public ArrayList<String[]> cercaStudenteStr(String nome) {
         List<Studente> studenti = cercaStudente(nome);
-        java.util.ArrayList<String[]> risultati = new java.util.ArrayList<>();
+        ArrayList<String[]> risultati = new ArrayList<>();
         for (Studente s : studenti) {
             risultati.add(new String[]{s.getNome(), s.getCognome(), s.getEmail_IST(), s.getMatricola()});
         }
@@ -101,9 +105,9 @@ public class RegistroUtenze {
         return gestorePersistenza.cercaPerCampoLike(Docente.class, "nome", nome);
     }
 
-    public java.util.ArrayList<String[]> cercaDocenteStr(String nome) {
+    public ArrayList<String[]> cercaDocenteStr(String nome) {
         List<Docente> docenti = cercaDocente(nome);
-        java.util.ArrayList<String[]> risultati = new java.util.ArrayList<>();
+        ArrayList<String[]> risultati = new ArrayList<>();
         for (Docente d : docenti) {
             risultati.add(new String[]{d.getNome(), d.getCognome(), d.getEmail_IST(), d.getMatricola()});
         }
@@ -111,7 +115,7 @@ public class RegistroUtenze {
     }
 
     public Studente cercaUtentePerEmail(String email) {
-        return gestorePersistenza.cercaPrimoPerCampi(Studente.class, java.util.Map.of("email_IST", email));
+        return gestorePersistenza.cercaPrimoPerCampi(Studente.class, Map.of("email_IST", email));
     }
 
     public boolean registraUtente(String nome, String cognome, String email, String pwd, String ruolo) {

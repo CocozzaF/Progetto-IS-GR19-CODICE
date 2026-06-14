@@ -1,14 +1,18 @@
 package Control;
 
+import Entity.RegistroUtenze;
+
+import java.util.ArrayList;
+
 public class ControllerGestioneUtenze {
 
-    private Entity.RegistroUtenze registroUtenze;
+    private RegistroUtenze registroUtenze;
 
     public ControllerGestioneUtenze() {
-        this.registroUtenze = new Entity.RegistroUtenze();
+        this.registroUtenze = new RegistroUtenze();
     }
 
-    public java.util.ArrayList<String> accedi(String emailIstituzionale, String password) {
+    public ArrayList<String> accedi(String emailIstituzionale, String password) {
         return registroUtenze.verificaCredenzialiStr(emailIstituzionale, password);
     }
     public boolean registraUtente(String nome, String cognome, String email, String pwd, String ruolo) {
