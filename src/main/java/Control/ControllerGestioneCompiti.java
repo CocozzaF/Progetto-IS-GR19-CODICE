@@ -30,7 +30,11 @@ public class ControllerGestioneCompiti {
             if (scadenzaNormalizzata.before(dataOdierna))
                 return false;
 
-            return registroClassi.assegnaCompito(codiceUnivoco, titolo, descrizione, scadenza);
+            boolean esito = registroClassi.assegnaCompito(codiceUnivoco, titolo, descrizione, scadenza);
+            if (esito) {
+                Boundary.BoundaryGestoreNotifica.notificaNuovoCompito(codiceUnivoco, titolo, descrizione, scadenza);
+            }
+            return esito;
         } catch (Exception e) {
             return false;
         }
@@ -48,8 +52,7 @@ public class ControllerGestioneCompiti {
         return registroClassi.modificaCompito(id, titolo, descrizione, scadenza);
     }
 
-    public void notificaNuovoCompito(String codiceUnivoco, String titolo) {
-        System.out.println(
-                "Notifica: Assegnato nuovo compito '" + titolo + "' alla classe " + codiceUnivoco);
+    public void notificaNuovoCompito(String codiceUnivoco, String titolo, String descrizione, Date scadenza) {
+        Boundary.BoundaryGestoreNotifica.notificaNuovoCompito(codiceUnivoco, titolo, descrizione, scadenza);
     }
 }

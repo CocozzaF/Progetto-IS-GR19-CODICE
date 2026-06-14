@@ -67,14 +67,6 @@ public class RegistroClassi {
         return false;
     }
 
-    public void aggiungiLezioneAClasse(String codiceUnivoco, Lezione lezione) {
-        ClasseVirtuale classe = gestorePersistenza.trovaPerId(ClasseVirtuale.class, codiceUnivoco);
-        if (classe != null) {
-            lezione.setClasseVirtuale(classe);
-            gestorePersistenza.salva(lezione);
-        }
-    }
-
     public List<Lezione> getLezioniClasse(String codiceUnivoco) {
         return gestorePersistenza.cercaPerCampo(Lezione.class, "classeVirtuale.cod", codiceUnivoco);
     }

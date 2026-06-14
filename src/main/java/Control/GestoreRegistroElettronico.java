@@ -30,18 +30,17 @@ public class GestoreRegistroElettronico {
     }
 
     public List<String[]> ricercaStudente(String nome) {
+
         return ricercaCtrls.ricercaStudente(nome);
     }
 
     public List<String[]> ricercaDocente(String nome) {
+
         return ricercaCtrls.ricercaDocente(nome);
     }
 
-    public List<String[]> ricercaClassePerCodice(String codice) {
-        return ricercaCtrls.ricercaClassePerCodice(codice);
-    }
-
     public List<String[]> ricercaClassePerNome(String nome) {
+
         return ricercaCtrls.ricercaClassePerNome(nome);
     }
 
@@ -54,6 +53,7 @@ public class GestoreRegistroElettronico {
     }
 
     public List<String[]> getClassiPerStudente(String matricola) {
+
         return ctrlLezione.getClassiPerStudente(matricola);
     }
 
@@ -72,10 +72,12 @@ public class GestoreRegistroElettronico {
     }
 
     public List<String[]> getStudentiIscritti(String idClasse) {
+
         return iscrizioneCtrl.getStudentiIscritti(idClasse);
     }
 
     public ArrayList<String> accedi(String email, String pwd) {
+
         return utenzaCtrl.accedi(email, pwd);
     }
 

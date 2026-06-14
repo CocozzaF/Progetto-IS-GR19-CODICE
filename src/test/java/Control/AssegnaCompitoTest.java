@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -168,6 +169,31 @@ public class AssegnaCompitoTest {
     }
 
     @Test
+    public void testDescrizioneNulla() throws ParseException {
+        String codiceUnivoco = "1A";
+        String titolo = "Es 1";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date scadenza = sdf.parse("15/12/2026");
+
+        boolean result = controller.assegnaCompito(codiceUnivoco, titolo, null, scadenza);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void testDescrizioneVuota() throws ParseException {
+        String codiceUnivoco = "1A";
+        String titolo = "Es 1";
+        String descrizione = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date scadenza = sdf.parse("15/12/2026");
+
+        boolean result = controller.assegnaCompito(codiceUnivoco, titolo, descrizione, scadenza);
+
+        assertTrue(result);
+    }
+
+    @Test
     public void testGetCompitiClasse() {
         List<String[]> compiti = controller.getCompitiClasse("1A");
         assertNotNull(compiti);
@@ -175,7 +201,12 @@ public class AssegnaCompitoTest {
 
     @Test
     public void testGetDettaglioCompito() {
-        assertDoesNotThrow(() -> controller.getDettaglioCompito(1L));
+        controller.assegnaCompito("1A", "Test Dettaglio", "Desc", new Date());
+        List<String[]> compiti = controller.getCompitiClasse("1A");
+        Long id = Long.parseLong(compiti.get(compiti.size() - 1)[0]);
+        String[] dettaglio = controller.getDettaglioCompito(id);
+        assertNotNull(dettaglio);
+        assertEquals("Test Dettaglio", dettaglio[1]);
     }
 
     @Test
@@ -186,12 +217,17 @@ public class AssegnaCompitoTest {
 
     @Test
     public void testModificaCompitiValid() {
-        assertDoesNotThrow(() -> controller.modificaCompiti(1L, "Titolo", "Desc", new Date()));
+        controller.assegnaCompito("1A", "Test Modifica", "Desc", new Date());
+        List<String[]> compiti = controller.getCompitiClasse("1A");
+        Long id = Long.parseLong(compiti.get(compiti.size() - 1)[0]);
+
+        boolean result = controller.modificaCompiti(id, "Titolo Modificato", "Desc Modificata", new Date());
+        assertTrue(result);
     }
 
     @Test
     public void testNotificaNuovoCompito() {
         Entity.Compito compito = new Entity.Compito("Titolo", "Desc", new Date(), new Date());
-        assertDoesNotThrow(() -> controller.notificaNuovoCompito("1A", compito.getTitolo()));
+        assertDoesNotThrow(() -> controller.notificaNuovoCompito("1A", compito.getTitolo(), compito.getDesc(), compito.getData_Sc()));
     }
 }

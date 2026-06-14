@@ -59,23 +59,14 @@ public class Lezione {
         return argomento;
     }
 
-    public void setArgomento(String argomento) {
-
-        this.argomento = argomento;
-    }
-
     public String getDescrizione() {
+
         return descrizione;
     }
 
     public void setDescrizione(String descrizione) {
 
         this.descrizione = descrizione;
-    }
-
-    public ClasseVirtuale getClasseVirtuale() {
-
-        return classeVirtuale;
     }
 
     public void setClasseVirtuale(ClasseVirtuale classeVirtuale) {

@@ -18,6 +18,8 @@ public class ControllerGestioneLezione {
         this.gestorePersistenza = new GestorePersistenza();
     }
 
+    //Costuttori di test
+
     public ControllerGestioneLezione(RegistroClassi registroClassi) {
         this.registroClassi = registroClassi;
         this.gestorePersistenza = new GestorePersistenza();
@@ -27,6 +29,8 @@ public class ControllerGestioneLezione {
         this.registroClassi = registroClassi;
         this.gestorePersistenza = gestorePersistenza;
     }
+
+    //Costruttore di Test
 
     public boolean registraLezione(String idClasse, LocalDate data, String argomento, String descrizione) {
         if (argomento == null || argomento.trim().isEmpty()) {
@@ -38,7 +42,7 @@ public class ControllerGestioneLezione {
 
         boolean success = registroClassi.registraLezione(idClasse, data, argomento, descrizione);
         if (success) {
-            BoundaryGestoreNotifica.notificaNuovaLezione(idClasse);
+            BoundaryGestoreNotifica.notificaNuovaLezione(idClasse, data, argomento, descrizione);
         }
         return success;
     }

@@ -20,6 +20,7 @@ public class BoundaryHomeStudente extends JFrame {
 
     private BoundaryVisualizzaLezione boundaryVisualizzaLezione;
     private BoundaryConsultaCompiti boundaryConsultaCompiti;
+    private BoundaryIscrizioneAutonoma boundaryIscrizioneAutonoma;
 
     public BoundaryHomeStudente(String matricolaStudente, String nomeStudente, String cognomeStudente) {
         this.matricolaStudente = matricolaStudente;
@@ -27,6 +28,7 @@ public class BoundaryHomeStudente extends JFrame {
         this.cognomeStudente = cognomeStudente;
         boundaryVisualizzaLezione = new BoundaryVisualizzaLezione(matricolaStudente, new GestoreRegistroElettronico(), true);
         boundaryConsultaCompiti = new BoundaryConsultaCompiti(matricolaStudente, new GestoreRegistroElettronico(), true);
+        boundaryIscrizioneAutonoma = new BoundaryIscrizioneAutonoma(matricolaStudente);
         inizializzaUI();
     }
 
@@ -64,8 +66,7 @@ public class BoundaryHomeStudente extends JFrame {
     }
 
     public void IscrivitiClasse() {
-        BoundaryIscrizioneAutonoma form = new BoundaryIscrizioneAutonoma(matricolaStudente);
-        form.mostraSchermata();
+        boundaryIscrizioneAutonoma.mostraSchermata();
     }
 
     public void Logout() {
