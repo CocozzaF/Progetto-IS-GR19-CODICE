@@ -57,33 +57,23 @@ public class ClasseVirtuale {
         this.cod = cod;
     }
 
-    public List<Lezione> getLezioni() {
-        return lezioni;
-    }
-    
-    public void setLezioni(List<Lezione> lezioni) {
-        this.lezioni = lezioni;
-    }
-
     public void aggiungiLezione(Lezione lezione) {
         lezioni.add(lezione);
         lezione.setClasseVirtuale(this);
     }
 
-    public void rimuoviLezione(Lezione lezione) {
-        lezioni.remove(lezione);
-        lezione.setClasseVirtuale(null);
-    }
-
     public String getNome() {
+
         return nome;
     }
 
     public void setNome(String nome) {
+
         this.nome = nome;
     }
 
     public Docente getDocente() {
+
         return docente;
     }
 
@@ -91,14 +81,9 @@ public class ClasseVirtuale {
         this.docente = docente;
     }
 
-    
-
     public List<Compito> getCompitiAssegnati() {
-        return compitiAssegnati;
-    }
 
-    public void setCompitiAssegnati(List<Compito> compitiAssegnati) {
-        this.compitiAssegnati = compitiAssegnati;
+        return compitiAssegnati;
     }
 
     public Compito creaCompito(String Titolo, String Desc, Date Data_As, Date Data_Sc) {
@@ -107,21 +92,14 @@ public class ClasseVirtuale {
         return nuovoCompito;
     }
 
-    public Lezione creaLezione(String Argomento, LocalDate Data, String Descrizione) {
-        Lezione nuovaLezione = new Lezione(Data, Argomento, Descrizione);
-        this.lezioni.add(nuovaLezione);
-        return nuovaLezione;
-    }
-
-    
-
     public List<Studente> getStudenti() {
+
         return studenti;
     }
     public void setStudenti(List<Studente> studenti) {
+
         this.studenti = studenti;
     }
-
 
     @Override
     public String toString() {

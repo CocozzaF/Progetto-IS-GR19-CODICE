@@ -19,25 +19,13 @@ public class ControllerRicerca {
     }
 
     public List<String[]> ricercaStudente(String nome) {
+
         return registroUtenza.cercaStudenteStr(nome);
     }
 
     public List<String[]> ricercaDocente(String nome) {
+
         return registroUtenza.cercaDocenteStr(nome);
-    }
-
-    public List<String[]> ricercaLezioni(String codiceClasse) {
-        return registroClassi.getLezioniClasseStr(codiceClasse);
-    }
-
-    public ArrayList<String> ricercaUtentePerEmail(String email) {
-        Entity.Studente s = registroUtenza.cercaUtentePerEmail(email);
-        if (s == null) return null;
-        ArrayList<String> dati = new ArrayList<>();
-        dati.add(s.getNome());
-        dati.add(s.getCognome());
-        dati.add(s.getMatricola());
-        return dati;
     }
 
     public List<String[]> ricercaClassePerCodice(String codice) {

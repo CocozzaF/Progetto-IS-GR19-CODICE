@@ -40,32 +40,35 @@ public class Compito {
         return id;
     }
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public String getTitolo() {
+
         return Titolo;
     }
     public void setTitolo(String Titolo) {
+
         this.Titolo = Titolo;
     }
 
     public String getDesc() {
+
         return Desc;
     }
     public void setDesc(String Desc) {
+
         this.Desc = Desc;
     }
 
     public Date getData_As() {
+
         return Data_As;
     }
-    public void setData_As(Date Data_As) {
-        this.Data_As = Data_As;
-    }
-
 
     public Date getData_Sc() {
+
         return Data_Sc;
     }
     public void setData_Sc(Date Data_Sc) {
