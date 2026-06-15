@@ -30,7 +30,7 @@ public class ControllerGestioneLezione {
         this.gestorePersistenza = gestorePersistenza;
     }
 
-    //Costruttore di Test
+    //Costruttori di Test
 
     public boolean registraLezione(String idClasse, LocalDate data, String argomento, String descrizione) {
         if (argomento == null || argomento.trim().isEmpty()) {
