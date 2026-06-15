@@ -24,7 +24,12 @@ public class AssegnaCompitoTest {
         controller = new ControllerGestioneCompiti();
         RegistroClassi registro = new RegistroClassi();
         if (registro.cercaClassePerCodice("1A") == null) {
-            Entity.Docente docenteMock = new Entity.Docente("D_TEST", "Nome", "Cognome", "test@ist.it", "password");
+            Database.GestorePersistenza gp = new Database.GestorePersistenza();
+            Entity.Docente docenteMock = gp.cercaPrimoPerCampi(Entity.Docente.class, java.util.Map.of("email_IST", "test@ist.it"));
+            if (docenteMock == null) {
+                docenteMock = new Entity.Docente("D_TEST", "Nome", "Cognome", "test@ist.it", "password");
+                gp.salva(docenteMock);
+            }
             Entity.ClasseVirtuale cv = new Entity.ClasseVirtuale("Classe Test", "1A", docenteMock);
             registro.salvaClasseVirtuale(cv);
         }
