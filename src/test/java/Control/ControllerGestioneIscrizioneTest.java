@@ -152,8 +152,6 @@ class ControllerGestioneIscrizioneTest {
                 "TC-3: non deve essere chiamato aggiornaOggetto() per un duplicato");
     }
 
-    // I test diretti per verificaIscrizioneEsistente sono stati rimossi 
-    // in quanto la logica è stata spostata e usa direttamente il contains() della lista.
 
     @Test
     void testStudenteNonTrovato() {
